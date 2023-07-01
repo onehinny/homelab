@@ -10,7 +10,7 @@ spec:
     project: default
     source:
         path: nextcloud
-        targetRevision: HEAD
+        targetRevision: test
         helm:
             valueFiles:
                 - values.yaml
