@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-addons
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/onehinny/homelab.git
+      revision: test
+      files:
+      - path: "apps/*/config.json"
+      directories:
+      - path: apps/*
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/onehinny/homelab.git
+        targetRevision: '{{branch}}'
+        path: '{{path}}'
+        helm:
+            valueFiles:
+                - values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated: 
+          prune: true
+        syncOptions:
+          - CreateNamespace=true

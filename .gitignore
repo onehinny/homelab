@@ -1,0 +1,4 @@
+.vscode/settings.json
+
+*.tgz
+Chart.lock

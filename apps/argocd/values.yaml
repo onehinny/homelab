@@ -1,0 +1,17 @@
+argo-cd:
+  dex:
+    enabled: false
+  server:
+    extraArgs:
+      # - --insecure
+    config:
+      repositories: |
+        - type: helm
+          name: argo-cd
+          url: https://argoproj.github.io/argo-helm
+        - type: git
+          name: homelab
+          url: https://github.com/onehinny/homelab.git
+
+templates:
+  url: ''
