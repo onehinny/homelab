@@ -9,8 +9,8 @@ spec:
         server: https://kubernetes.default.svc
     project: default
     source:
-        path: nextcloud
         repoURL: https://github.com/onehinny/homelab.git
+        path: apps/nextcloud
         targetRevision: test
         helm:
             valueFiles:

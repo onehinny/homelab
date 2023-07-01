@@ -9,8 +9,8 @@ spec:
         server: https://kubernetes.default.svc
     project: default
     source:
-        path: traefik
         repoURL: https://github.com/onehinny/homelab.git
+        path: apps/traefik
         targetRevision: test
         helm:
             valueFiles:
