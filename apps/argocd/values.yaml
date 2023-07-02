@@ -14,4 +14,9 @@ argo-cd:
           url: https://github.com/onehinny/homelab.git
 
 templates:
-  url: ''
+  ingress:
+    url: argocd.matthiasstein.net
+    app_name: argocd
+    namespace: argocd
+    service: argocd-server
+    prot: 443

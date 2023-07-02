@@ -1,0 +1,20 @@
+{{- if .Values.templates.ingress.url }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Values.templates.ingress.app_name }}
+  namespace: {{ .Values.templates.ingress.namespace }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`{{- .Values.templates.ingress.url }}`)
+      priority: 10
+      services:
+        - name: {{ .Values.templates.ingress.service }}
+          port: {{ .Values.templates.ingress.prot }}
+  tls:
+      store:
+          name: default
+{{- end }}

@@ -1,12 +1,18 @@
+templates:
+  ingress:
+    url: nextcloud.matthiasstein.net
+    app_name: nextcloud
+    namespace: nextcloud
+    service: nextcloud
+    prot: 8080
+
 ## Official nextcloud image version
 ## ref: https://hub.docker.com/r/library/nextcloud/tags/
 ##
 image:
   repository: nextcloud
-  # tag: 24.0.3-apache
+  tag: 27.0.0
   pullPolicy: IfNotPresent
-  # pullSecrets:
-  #   - myRegistrKeySecretName
 
 nameOverride: ""
 fullnameOverride: ""
@@ -71,15 +77,12 @@ phpClientHttpsFix:
   protocol: https
 
 nextcloud:
-  host: nextcloud.kube.home
-  username: admin
-  password: changeme
-  ## Use an existing secret
+  host: nextcloud.matthiasstein.net
   existingSecret:
     enabled: false
-    # secretName: nameofsecret
-    # usernameKey: nextcloud-username
-    # passwordKey: nextcloud-password
+    secretName: nextcloud
+    usernameKey: nextcloud-username
+    passwordKey: nextcloud-password
     # tokenKey: nextcloud-token
     # smtpUsernameKey: smtp-username
     # smtpPasswordKey: smtp-password
