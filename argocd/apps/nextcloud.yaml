@@ -3,6 +3,8 @@ kind: Application
 metadata:
     name: nextcloud
     namespace: argocd
+    finalizers:
+        - resources-finalizer.argocd.argoproj.io
 spec:
     destination:
         namespace: nextcloud
@@ -10,7 +12,7 @@ spec:
     project: default
     source:
         repoURL: https://github.com/onehinny/homelab.git
-        path: apps/nextcloud
+        path: charts/nextcloud
         targetRevision: test
         helm:
             valueFiles:
