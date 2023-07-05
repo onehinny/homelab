@@ -16,7 +16,8 @@ templates:
     namespace: argocd
   certificate: 
     install: true
-    issuer: letsencrypt-staging # letsencrypt-production
+    # issuer: letsencrypt-staging
+    issuer: letsencrypt-production
     dns_names: 
       - argocd.matthiasstein.net
   ingress:

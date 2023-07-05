@@ -9,7 +9,7 @@ cert-manager:
         - --enable-certificate-owner-ref=true
 templates:
     letsencrypt:
-        production: false
+        production: true
         staging: true
         selfSigned: false
         email: cloud@matthiasstein.net

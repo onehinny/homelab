@@ -4,7 +4,8 @@ templates:
     namespace: nextcloud
   certificate: 
     install: true
-    issuer: letsencrypt-staging # letsencrypt-production
+    # issuer: letsencrypt-staging
+    issuer: letsencrypt-production
     dns_names: 
       - nextcloud.matthiasstein.net
   ingress:
