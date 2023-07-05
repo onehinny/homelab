@@ -3,7 +3,7 @@ templates:
     name: nextcloud
     namespace: nextcloud
   certificate: 
-    install: true
+    install: false
     # issuer: letsencrypt-staging
     issuer: letsencrypt-production
     dns_names: 

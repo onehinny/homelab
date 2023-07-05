@@ -21,11 +21,9 @@ spec:
                 port:
                   number: {{ .Values.templates.ingress.prot }}
   tls:
-    {{- if .Values.templates.certificate.install }}
     - hosts:
       {{- range .Values.templates.certificate.dns_names }}
       - {{ . | quote }}
       {{- end }}
       secretName: {{ .Values.templates.app.name }}-cert
-    {{- end }}
 {{- end }}
