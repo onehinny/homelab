@@ -13,10 +13,9 @@ spec:
     solvers:
     - dns01:
         cloudflare:
-          email: {{ .Values.templates.cloudflare.email }}
-        apiTokenSecretRef:
-          name: cloudflare-api-credentials
-          key: apiToken
+          apiTokenSecretRef:
+            name: cloudflare-api-credentials
+            key: apiToken
 {{- end }}
 {{- if .Values.templates.letsencrypt.production }}
 ---
