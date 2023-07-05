@@ -10,7 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: {{ .Values.templates.certificate.issuer }}
 spec:
   rules:
-    - host: tutorial-service.your_domain
+    - host: {{ .Values.templates.ingress.url }}
       http:
         paths:
           - path: /
