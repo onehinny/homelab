@@ -16,7 +16,7 @@ spec:
   - server auth
   - client auth
   dnsNames:
-  {{- range .Values.certificate.dns_names }}
+  {{- range .Values.templates.certificate.dns_names }}
   - {{ . | quote }}
   {{- end }}
   issuerRef:
