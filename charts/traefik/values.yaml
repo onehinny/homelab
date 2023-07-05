@@ -1,67 +1,74 @@
 templates:
-    install_cert: false
-    http_redirect:
-        enable: false
-    dashboard_hostname: traefik.matthiasstein.net
-    dashboard_auth: true
+  app:
+    name: traefik
+    namespace: traefik
+  certificate: 
+      install: false
+      issuer: letsencrypt-staging # letsencrypt-production
+      dns_names: 
+          - traefik.matthiasstein.net
+  http_redirect:
+      enable: false
+  dashboard_hostname: traefik.matthiasstein.net
+  dashboard_auth: true
 
 traefik:
-    env:
-        - name: CF_DNS_API_TOKEN
-          valueFrom:
-                secretKeyRef:
-                    key: apiToken
-                    name: cloudflare-api-credentials
-    # Removing to allow IP setting
-    ports:
-        # Configure your entrypoints here...
-        web:
-            # (optional) Permanent Redirect to HTTPS
-            redirectTo: websecure
-        websecure:
-            tls:
-            enabled: true
-            # (optional) Set a Default CertResolver
-            # certResolver: cloudflare
-    globalArguments:
-        - "--global.checknewversion"
-        - "--serversTransport.insecureSkipVerify=true"
-    service:
-        spec:
-            externalTrafficPolicy: Local
-    ingressRoute:
-        dashboard:
-            enabled: true
-    providers:
-      #kubernetesCRD:
-      #  enabled: true
-      kubernetesIngress:
+  env:
+    - name: CF_DNS_API_TOKEN
+      valueFrom:
+        secretKeyRef:
+          key: apiToken
+          name: cloudflare-api-credentials
+  # Removing to allow IP setting
+  ports:
+      # Configure your entrypoints here...
+    web:
+      # (optional) Permanent Redirect to HTTPS
+      redirectTo: websecure
+    websecure:
+        tls:
         enabled: true
-        # IP used for Kubernetes Ingress endpoints
-        publishedService:
-          enabled: true
-          # Published Kubernetes Service to copy status from. Format: namespace/servicename
-          # By default this Traefik service
-          # pathOverride: ""
-    # Set Traefik as your default Ingress Controller, according to Kubernetes 1.19+ changes.
-    ingressClass:
+        # (optional) Set a Default CertResolver
+        # certResolver: cloudflare
+  globalArguments:
+    - "--global.checknewversion"
+    - "--serversTransport.insecureSkipVerify=true"
+  service:
+    spec:
+      externalTrafficPolicy: Local
+  ingressRoute:
+    dashboard:
+      enabled: true
+  providers:
+    #kubernetesCRD:
+    #  enabled: true
+    kubernetesIngress:
+      enabled: true
+      # IP used for Kubernetes Ingress endpoints
+      publishedService:
         enabled: true
-        isDefaultClass: true
-    
-    logs:
-        # Configure log settings here...
-        general:
-            level: INFO
+        # Published Kubernetes Service to copy status from. Format: namespace/servicename
+        # By default this Traefik service
+        # pathOverride: ""
+  # Set Traefik as your default Ingress Controller, according to Kubernetes 1.19+ changes.
+  ingressClass:
+    enabled: true
+    isDefaultClass: true
+  
+  logs:
+    # Configure log settings here...
+    general:
+        level: INFO
 
-    # additionalArguments:
-    #     - --entrypoints.websecure.http.tls.certresolver=cloudflare
-    #     - --entrypoints.websecure.http.tls.domains[0].main=matthiasstein.net
-    #     - --entrypoints.websecure.http.tls.domains[0].sans=*.matthiasstein.net
-    #     - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
-    #     - --certificatesresolvers.cloudflare.acme.email=cloud@matthiasstein.net
-    #     - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1
-    #     - --certificatesresolvers.cloudflare.acme.storage=/certs/acme.json
-    persistence:
-        enabled: true
-        path: /certs
-        size: 128Mi
+  # additionalArguments:
+  #     - --entrypoints.websecure.http.tls.certresolver=cloudflare
+  #     - --entrypoints.websecure.http.tls.domains[0].main=matthiasstein.net
+  #     - --entrypoints.websecure.http.tls.domains[0].sans=*.matthiasstein.net
+  #     - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
+  #     - --certificatesresolvers.cloudflare.acme.email=cloud@matthiasstein.net
+  #     - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1
+  #     - --certificatesresolvers.cloudflare.acme.storage=/certs/acme.json
+  persistence:
+    enabled: true
+    path: /certs
+    size: 128Mi

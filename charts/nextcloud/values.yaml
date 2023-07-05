@@ -1,8 +1,14 @@
 templates:
+  app:
+    name: nextcloud
+    namespace: nextcloud
+  certificate: 
+    install: false
+    issuer: letsencrypt-staging # letsencrypt-production
+    dns_names: 
+      - nextcloud.matthiasstein.net
   ingress:
     url: nextcloud.matthiasstein.net
-    app_name: nextcloud
-    namespace: nextcloud
     service: nextcloud
     prot: 8080
 
