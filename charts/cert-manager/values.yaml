@@ -10,7 +10,7 @@ cert-manager:
 templates:
     letsencrypt:
         production: false
-        staging: false
+        staging: true
         selfSigned: false
         email: cloud@matthiasstein.net
         acme_host: 'dns.example.com'

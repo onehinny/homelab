@@ -32,11 +32,9 @@ spec:
     solvers:
     - dns01:
         cloudflare:
-          email: {{ .Values.templates.cloudflare.email }}
-        API Token:
           apiTokenSecretRef:
-            name: cloudflare-api-token-secret
-            key: api-token 
+            name: cloudflare-api-credentials
+            key: apiToken
 {{- end }}
 {{- if .Values.templates.letsencrypt.selfSigned }}
 apiVersion: cert-manager.io/v1
