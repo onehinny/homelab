@@ -1,0 +1,10 @@
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - directory: "/charts/nextcloud"
+    package-ecosystem: "docker"
+    schedule:
+      interval: "daily"
+      time: "13:47"
+      timezone: "Europe/Berlin"
