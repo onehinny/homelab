@@ -6,5 +6,5 @@ updates:
     package-ecosystem: "docker"
     schedule:
       interval: "daily"
-      time: "13:47"
+      time: "20:30"
       timezone: "Europe/Berlin"

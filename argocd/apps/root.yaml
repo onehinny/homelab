@@ -11,7 +11,7 @@ spec:
     source:
         repoURL: https://github.com/onehinny/homelab.git
         path: argocd/apps
-        targetRevision: test
+        targetRevision: main
     syncPolicy:
         automated: 
             selfHeal: true
