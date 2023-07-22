@@ -7,6 +7,17 @@ cert-manager:
     extraArgs: 
         - --cluster-resource-namespace=cert-manager
         - --enable-certificate-owner-ref=true
+    image:
+        repository: quay.io/jetstack/cert-manager-controller
+        tag: v1.12.2
+    webhook:
+        image:
+            repository: quay.io/jetstack/cert-manager-webhook
+            tag: v1.12.2
+    cainjector:
+        image:
+            repository: quay.io/jetstack/cert-manager-cainjector
+            tag: v1.12.2
 templates:
     letsencrypt:
         production: true

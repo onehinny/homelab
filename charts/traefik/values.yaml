@@ -13,6 +13,10 @@ templates:
   dashboard_auth: true
 
 traefik:
+  image:
+    registry: docker.io
+    repository: traefik
+    tag: v2.10.1
   env:
     - name: CF_DNS_API_TOKEN
       valueFrom:
