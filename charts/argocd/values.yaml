@@ -1,6 +1,21 @@
 argo-cd:
+  global:
+    image:
+      repository: quay.io/argoproj/argocd
+      tag: v2.7.4
+  controller: 
+    image:
+      repository: quay.io/argoproj/argocd
+      tag: v2.7.4
   dex:
+    image:
+      repository: ghcr.io/dexidp/dex
+      tag: v2.37.0
     enabled: false
+  redis:
+    image:
+      repository: public.ecr.aws/docker/library/redis
+      tag: 7.0.11-alpine
   server:
     extraArgs:
       # - --insecure

@@ -2,9 +2,27 @@
 
 version: 2
 updates:
+  - directory: "/charts/argocd"
+    package-ecosystem: "docker"
+    schedule:
+      interval: "daily"
+      time: "20:50"
+      timezone: "Europe/Berlin"
+  - directory: "/charts/cert-manager"
+    package-ecosystem: "docker"
+    schedule:
+      interval: "daily"
+      time: "20:50"
+      timezone: "Europe/Berlin"
   - directory: "/charts/nextcloud"
     package-ecosystem: "docker"
     schedule:
       interval: "daily"
-      time: "20:30"
+      time: "20:50"
+      timezone: "Europe/Berlin"
+  - directory: "/charts/traefik"
+    package-ecosystem: "docker"
+    schedule:
+      interval: "daily"
+      time: "20:50"
       timezone: "Europe/Berlin"
