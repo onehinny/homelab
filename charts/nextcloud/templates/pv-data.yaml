@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.templates.app.name }}
+  name: {{ .Values.templates.app.name }}-data
   namespace: {{ .Values.templates.app.namespace }}
   labels:
     type: local
