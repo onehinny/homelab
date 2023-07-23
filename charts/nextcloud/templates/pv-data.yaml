@@ -6,7 +6,7 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: {{ .Values.templates.app.name }}
+  storageClassName: {{ .Values.templates.app.name }}-data
   capacity:
     storage: {{ .Values.templates.pv.capacity }}
   accessModes:
