@@ -146,6 +146,13 @@ nextcloud:
             1 => '10.0.0.0/8'
           )
         );
+      k8s-home.config.php: |-
+        <?php
+        $CONFIG = array (
+          'default_language' => 'de',
+          'default_locale' => 'de_DE',
+          'upgrade.disable-web' => true,
+        );
 
     # For example, to use S3 as primary storage
     # ref: https://docs.nextcloud.com/server/13/admin_manual/configuration_files/primary_storage.html#simple-storage-service-s3
@@ -221,10 +228,10 @@ nextcloud:
     # Set securityContext parameters for the nextcloud CONTAINER only (will not affect nginx container).
     # For example, you may need to define runAsNonRoot directive
     securityContext: 
-      runAsUser: 33
+      # runAsUser: 33
       runAsGroup: 33
-      runAsNonRoot: true
-      readOnlyRootFilesystem: false
+      # runAsNonRoot: true
+      # readOnlyRootFilesystem: false
 
     # Set securityContext parameters for the entire pod. For example, you may need to define runAsNonRoot directive
     podSecurityContext: {}
