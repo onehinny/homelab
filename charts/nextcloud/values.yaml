@@ -13,7 +13,7 @@ templates:
     service: nextcloud
     prot: 8080
   pv:
-    base_path: "/mnt"
+    base_path: "/var/homelab"
     capacity: 10Gi
 
 nextcloud:
@@ -187,15 +187,15 @@ nextcloud:
     #        key: secret_key
 
     # Extra init containers that runs before pods start.
-    extraInitContainers: 
-     - name: create-folder
-       image: busybox:1.36
-       command:
-        - "/bin/mkdir"
-       args:
-        - "-p"
-        - "/mnt/nextcloud-config"
-        - "/mnt/nextcloud-data"
+    # extraInitContainers: 
+    #  - name: create-folder
+    #    image: busybox:1.36
+    #    command:
+    #     - "/bin/mkdir"
+    #    args:
+    #     - "-p"
+    #     - "/mnt/nextcloud-config"
+    #     - "/mnt/nextcloud-data"
 
     # Extra sidecar containers.
     extraSidecarContainers: []
