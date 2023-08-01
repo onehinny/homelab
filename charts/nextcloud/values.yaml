@@ -228,7 +228,7 @@ nextcloud:
     # Set securityContext parameters for the nextcloud CONTAINER only (will not affect nginx container).
     # For example, you may need to define runAsNonRoot directive
     securityContext: 
-      # runAsUser: 33
+      runAsUser: 33
       runAsGroup: 33
       # runAsNonRoot: true
       # readOnlyRootFilesystem: false
@@ -392,10 +392,10 @@ nextcloud:
       # preStopCommand: []
     # Set securityContext parameters. For example, you may need to define runAsNonRoot directive
     securityContext: {}
-    #   runAsUser: 33
-    #   runAsGroup: 33
-    #   runAsNonRoot: true
-    #   readOnlyRootFilesystem: true
+      # runAsUser: 33
+      # runAsGroup: 33
+      # runAsNonRoot: true
+      # readOnlyRootFilesystem: true
 
   service:
     type: ClusterIP
@@ -570,7 +570,3 @@ nextcloud:
       create: true
       name: nextcloud-serviceaccount
       annotations: {}
-
-
-  ## @param securityContext for nextcloud pod @deprecated Use `nextcloud.podSecurityContext` instead
-  securityContext: {}
