@@ -103,17 +103,6 @@ nextcloud:
     datadir: /var/www/html/data
     persistence:
       subPath:
-    mail:
-      enabled: false
-      fromAddress: user
-      domain: domain.com
-      smtp:
-        host: domain.com
-        secure: ssl
-        port: 465
-        authtype: LOGIN
-        name: user
-        password: pass
     # PHP Configuration files
     # Will be injected in /usr/local/etc/php/conf.d for apache image and in /usr/local/etc/php-fpm.d when nginx.enabled: true
     phpConfigs: {}
