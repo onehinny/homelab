@@ -1,12 +1,8 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: nextcloud
+  name: nextcloud-headers
 spec:
-  redirectRegex:
-    permanent: true
-    regex: "https://(.*)/.well-known/(card|cal)dav"
-    replacement: "https://${1}/remote.php/dav/"
   headers:
     referrerPolicy: "no-referrer"
     SSLRedirect: true
