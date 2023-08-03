@@ -27,14 +27,4 @@ spec:
       - {{ . | quote }}
       {{- end }}
       secretName: {{ .Values.templates.app.name }}-cert
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: nextcloud-redirectregex
-spec:
-  redirectRegex:
-    permanent: true
-    regex: "https://(.*)/.well-known/(card|cal)dav"
-    replacement: "https://${1}/remote.php/dav/"
 {{- end }}
