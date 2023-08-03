@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Values.templates.app.namespace }}
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: nextcloud-redirectregex
     traefik.ingress.kubernetes.io/router.tls: "true"
     cert-manager.io/cluster-issuer: {{ .Values.templates.certificate.issuer }}
 spec:
@@ -26,4 +27,14 @@ spec:
       - {{ . | quote }}
       {{- end }}
       secretName: {{ .Values.templates.app.name }}-cert
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nextcloud-redirectregex
+spec:
+  redirectRegex:
+    permanent: true
+    regex: "https://(.*)/.well-known/(card|cal)dav"
+    replacement: "https://${1}/remote.php/dav/"
 {{- end }}
