@@ -9,11 +9,11 @@ spec:
     replacement: "https://${1}/remote.php/dav/"
   headers:
     referrerPolicy: "no-referrer"
-    SSLRedirect: "true"
+    SSLRedirect: true
     STSSeconds: "315360000"
-    browserXSSFilter: "true"
-    contentTypeNosniff: "true"
-    forceSTSHeader: "true"
-    STSIncludeSubdomains: "true"
-    STSPreload: "true"
+    browserXSSFilter: true
+    contentTypeNosniff: true
+    forceSTSHeader: true
+    STSIncludeSubdomains: true
+    STSPreload: true
     customFrameOptionsValue: "SAMEORIGIN"
