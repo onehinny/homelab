@@ -4,12 +4,12 @@ metadata:
   name: nextcloud-headers
 spec:
   headers:
-    referrerPolicy: "no-referrer"
+    referrerPolicy: no-referrer
     SSLRedirect: true
-    STSSeconds: "315360000"
+    STSSeconds: 315360000
     browserXSSFilter: true
     contentTypeNosniff: true
     forceSTSHeader: true
     STSIncludeSubdomains: true
     STSPreload: true
-    customFrameOptionsValue: "SAMEORIGIN"
+    customFrameOptionsValue: SAMEORIGIN
