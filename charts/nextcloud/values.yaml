@@ -188,11 +188,41 @@ nextcloud:
     ##
     ## Extra environment variables
     extraEnv:
-    #  - name: SOME_SECRET_ENV
-    #    valueFrom:
-    #      secretKeyRef:
-    #        name: nextcloud
-    #        key: secret_key
+     - name: SMTP_NAME
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_name
+     - name: SMTP_HOST
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_host
+     - name: SMTP_PORT
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_port
+     - name: SMTP_PASSWORD
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_password
+     - name: MAIL_FROM_ADDRESS
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: mail_from_address
+     - name: MAIL_DOMAIN
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: mail_domain
+     - name: SMTP_SECURE
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_secure
 
     # Extra init containers that runs before pods start.
     # extraInitContainers: 
