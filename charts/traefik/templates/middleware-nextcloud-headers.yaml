@@ -5,11 +5,10 @@ metadata:
 spec:
   headers:
     referrerPolicy: no-referrer
-    SSLRedirect: true
-    STSSeconds: 315360000
-    browserXSSFilter: true
+    stsSeconds: 315360000
+    browserXssFilter: true
     contentTypeNosniff: true
     forceSTSHeader: true
-    STSIncludeSubdomains: true
-    STSPreload: true
+    stsIncludeSubdomains: true
+    stsPreload: true
     customFrameOptionsValue: SAMEORIGIN
