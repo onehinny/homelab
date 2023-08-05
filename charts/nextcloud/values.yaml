@@ -12,6 +12,9 @@ templates:
     url: nextcloud.matthiasstein.net
     service: nextcloud
     prot: 8080
+  pv:
+    base_path: "/var/homelab"
+    capacity: 10Gi
 
 nextcloud:
   ## Official nextcloud image version
@@ -100,17 +103,6 @@ nextcloud:
     datadir: /var/www/html/data
     persistence:
       subPath:
-    mail:
-      enabled: false
-      fromAddress: user
-      domain: domain.com
-      smtp:
-        host: domain.com
-        secure: ssl
-        port: 465
-        authtype: LOGIN
-        name: user
-        password: pass
     # PHP Configuration files
     # Will be injected in /usr/local/etc/php/conf.d for apache image and in /usr/local/etc/php-fpm.d when nginx.enabled: true
     phpConfigs: {}
@@ -142,6 +134,14 @@ nextcloud:
             0 => '127.0.0.1',
             1 => '10.0.0.0/8'
           )
+        );
+      k8s-home.config.php: |-
+        <?php
+        $CONFIG = array (
+          'default_language' => 'de',
+          'default_locale' => 'de_DE',
+          'upgrade.disable-web' => true,
+          'default_phone_region' => 'DE'
         );
 
     # For example, to use S3 as primary storage
@@ -177,17 +177,52 @@ nextcloud:
     ##
     ## Extra environment variables
     extraEnv:
-    #  - name: SOME_SECRET_ENV
-    #    valueFrom:
-    #      secretKeyRef:
-    #        name: nextcloud
-    #        key: secret_key
+     - name: SMTP_NAME
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_name
+     - name: SMTP_HOST
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_host
+     - name: SMTP_PORT
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_port
+     - name: SMTP_PASSWORD
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_password
+     - name: MAIL_FROM_ADDRESS
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: mail_from_address
+     - name: MAIL_DOMAIN
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: mail_domain
+     - name: SMTP_SECURE
+       valueFrom:
+         secretKeyRef:
+           name: nextcloud
+           key: smtp_secure
 
     # Extra init containers that runs before pods start.
-    extraInitContainers: []
-    #  - name: do-something
-    #    image: busybox
-    #    command: ['do', 'something']
+    # extraInitContainers: 
+    #  - name: create-folder
+    #    image: busybox:1.36
+    #    command:
+    #     - "/bin/mkdir"
+    #    args:
+    #     - "-p"
+    #     - "/mnt/nextcloud-config"
+    #     - "/mnt/nextcloud-data"
 
     # Extra sidecar containers.
     extraSidecarContainers: []
@@ -213,10 +248,10 @@ nextcloud:
     # Set securityContext parameters for the nextcloud CONTAINER only (will not affect nginx container).
     # For example, you may need to define runAsNonRoot directive
     securityContext: {}
-    #   runAsUser: 33
-    #   runAsGroup: 33
-    #   runAsNonRoot: true
-    #   readOnlyRootFilesystem: false
+      # runAsUser: 33
+      # runAsGroup: 33
+      # runAsNonRoot: true
+      # readOnlyRootFilesystem: false
 
     # Set securityContext parameters for the entire pod. For example, you may need to define runAsNonRoot directive
     podSecurityContext: {}
@@ -349,14 +384,14 @@ nextcloud:
   ##
 
   redis:
-    enabled: false
+    enabled: true
     auth:
       enabled: true
-      password: 'changeme'
+      # password: 'changeme'
       # name of an existing secret with Redis® credentials (instead of auth.password), must be created ahead of time
-      existingSecret: ""
+      existingSecret: "nextcloud-redis"
       # Password key to be retrieved from existing secret
-      existingSecretPasswordKey: ""
+      existingSecretPasswordKey: "nextcloud-redis-password"
 
 
   ## Cronjob to execute Nextcloud background tasks
@@ -377,10 +412,10 @@ nextcloud:
       # preStopCommand: []
     # Set securityContext parameters. For example, you may need to define runAsNonRoot directive
     securityContext: {}
-    #   runAsUser: 33
-    #   runAsGroup: 33
-    #   runAsNonRoot: true
-    #   readOnlyRootFilesystem: true
+      # runAsUser: 33
+      # runAsGroup: 33
+      # runAsNonRoot: true
+      # readOnlyRootFilesystem: true
 
   service:
     type: ClusterIP
@@ -393,7 +428,7 @@ nextcloud:
   ##
   persistence:
     # Nextcloud Data (/var/www/html)
-    enabled: false
+    enabled: true
     annotations: {}
     ## nextcloud data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
@@ -402,24 +437,23 @@ nextcloud:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    # storageClass: "-"
+    storageClass: "nextcloud-config"
 
     ## A manually managed Persistent Volume and Claim
     ## Requires persistence.enabled: true
     ## If defined, PVC must be created manually before volume will be bound
-    # existingClaim:
-
+    # existingClaim: nextcloud
     accessMode: ReadWriteOnce
     size: 8Gi
 
     ## Use an additional pvc for the data directory rather than a subpath of the default PVC
     ## Useful to store data on a different storageClass (e.g. on slower disks)
     nextcloudData:
-      enabled: false
+      enabled: true
       subPath:
       annotations: {}
-      # storageClass: "-"
-      # existingClaim:
+      storageClass: "nextcloud-data"
+      # existingClaim: nextcloud-data
       accessMode: ReadWriteOnce
       size: 8Gi
 
@@ -556,7 +590,3 @@ nextcloud:
       create: true
       name: nextcloud-serviceaccount
       annotations: {}
-
-
-  ## @param securityContext for nextcloud pod @deprecated Use `nextcloud.podSecurityContext` instead
-  securityContext: {}
