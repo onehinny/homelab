@@ -1,0 +1,130 @@
+
+templates:
+  app:
+    name: ntfy
+    namespace: ntfy
+  certificate: 
+    install: false
+    # issuer: letsencrypt-staging
+    issuer: letsencrypt-production
+    dns_names: 
+      - ntfy.matthiasstein.net
+  ingress:
+    url: ntfy.matthiasstein.net
+    service: ntfy
+    port: 80
+  pv:
+    base_path: "/var/homelab"
+    capacity: 1Gi
+
+
+# Default values for ntfy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: "binwiederhier/ntfy"
+  pullPolicy: IfNotPresent
+  tag: "v1.28.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+  portocol: TCP
+  targetPort: 80
+  name: ntfy
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env:
+  - name: TZ # set timezone
+    value: Europe/Berlin
+  - name: NTFY_DEBUG # enable/disable debug
+    value: "false"
+  - name: NTFY_LOG_LEVEL # adjust log level
+    value: INFO
+
+args: serve 
+
+volumeMounts:
+  - mountPath: /etc/ntfy/server.yml
+    subPath: server.yml
+    name: config
+  - mountPath: /var/cache/ntfy
+    name: cache-volume #cache volume mounted to persistent volume
+
+volumes:
+  - name: config
+    configMap:
+      name: ntfy
+  - name: cache-volume
+    persistentVolumeClaim: # stores /cache/ntfy in defined pv
+      claimName: ntfy
+
