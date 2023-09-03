@@ -20,7 +20,7 @@ spec:
               service:
                 name: {{ .Values.templates.ingress.service }}
                 port:
-                  number: {{ .Values.templates.ingress.prot }}
+                  number: {{ .Values.templates.ingress.port }}
   tls:
     - hosts:
       {{- range .Values.templates.certificate.dns_names }}

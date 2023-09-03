@@ -38,4 +38,4 @@ templates:
   ingress:
     url: argocd.matthiasstein.net
     service: argocd-server
-    prot: 443
+    port: 443

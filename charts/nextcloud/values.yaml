@@ -11,7 +11,7 @@ templates:
   ingress:
     url: nextcloud.matthiasstein.net
     service: nextcloud
-    prot: 8080
+    port: 80
   pv:
     base_path: "/var/homelab"
     capacity: 10Gi
@@ -85,7 +85,7 @@ nextcloud:
 
   phpClientHttpsFix:
     enabled: false
-    protocol: https
+    portocol: https
 
   nextcloud:
     host: nextcloud.matthiasstein.net
@@ -110,7 +110,7 @@ nextcloud:
     # IMPORTANT: Will be used only if you put extra configs, otherwise default will come from nextcloud itself
     # Default confgurations can be found here: https://github.com/nextcloud/docker/tree/master/16.0/apache/config
     defaultConfigs:
-      # To protect /var/www/html/config
+      # To portect /var/www/html/config
       .htaccess: true
       # Redis default configuration
       redis.config.php: true
@@ -419,7 +419,7 @@ nextcloud:
 
   service:
     type: ClusterIP
-    port: 8080
+    port: 80
     loadBalancerIP: nil
     nodePort: nil
 
