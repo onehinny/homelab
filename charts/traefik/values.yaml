@@ -16,7 +16,7 @@ traefik:
   image:
     registry: docker.io
     repository: traefik
-    tag: 2.10.4
+    tag: v3.0
   env:
     - name: CF_DNS_API_TOKEN
       valueFrom:
