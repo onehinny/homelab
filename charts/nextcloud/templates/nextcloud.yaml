@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.templates.app.name }}
+  namespace: {{ .Values.templates.app.namespace }}
+spec:
+  replicas: {{ .Values.nextcloud.replicaCount }}
+  revisionHistoryLimit: {{ .Values.nextcloud.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: {{ .Values.templates.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.templates.app.name }}
+    spec:
+      containers:
+        - image: "{{ .Values.nextcloud.image.repository }}:{{ .Values.nextcloud.image.tag }}"
+          name: {{ .Values.templates.app.name }}
+          resources:
+            {{- toYaml .Values.nextcloud.resources | nindent 12 }}
+          volumeMounts:
+            {{- toYaml .Values.nextcloud.volumeMounts | nindent 12 }}
+          env:
+            {{- toYaml .Values.nextcloud.env | nindent 12 }}
+        - name: {{ .Values.templates.app.name }}-cron
+          image: "{{ .Values.nextcloud.image.repository }}:{{ .Values.nextcloud.image.tag }}"
+          command:
+            - /cron.sh
+          resources:
+            {{- toYaml .Values.nextcloud.resources | nindent 12 }}
+          volumeMounts:
+            {{- toYaml .Values.nextcloud.volumeMounts | nindent 12 }}
+          env:
+            {{- toYaml .Values.nextcloud.env | nindent 12 }}
+      volumes:
+          {{- toYaml .Values.nextcloud.volumes | nindent 8 }}
+      initContainers:
+        - name: postgresql-isready
+          image: {{ .Values.database.image }}
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: nextcloud-db-user
+                  name: nextcloud-db
+          command:
+            - "sh"
+            - "-c"
+            - {{ printf "until pg_isready -h %s-db -U ${POSTGRES_USER} ; do sleep 2 ; done" .Values.templates.app.name }}
+        # - name: config-creator
+        #   image: alpine:latest
+        #   command: ["/bin/sh","-c"]
+        #   args: ["mkdir -p /var/www/html/config; cp --recursive /var/config/* /var/www/html/config/; chown -R 33:33 /var/www/html/config"]

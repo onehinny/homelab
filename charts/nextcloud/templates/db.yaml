@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.templates.app.name }}-db
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.templates.app.name }}-db
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.templates.app.name }}-db
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - image: {{ .Values.database.image }} 
+          name: {{ .Values.templates.app.name }}-db
+          volumeMounts:
+            - name: db-volume
+              mountPath: {{ .Values.database.mountPath }}
+          resources:
+            limits:
+              memory: 396Mi
+              cpu: 1000m
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: nextcloud-db-password
+                  name: nextcloud-db
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: nextcloud-db-user
+                  name: nextcloud-db
+      volumes:
+        - name: db-volume
+          hostPath:
+            path: {{ .Values.database.volumes.path }}
+            type: DirectoryOrCreate
