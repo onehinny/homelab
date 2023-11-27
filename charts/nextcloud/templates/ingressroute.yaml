@@ -8,10 +8,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
     traefik.ingress.kubernetes.io/router.tls: 'true'
     cert-manager.io/cluster-issuer: {{ .Values.templates.certificate.issuer }}
-    traefik.http.routers.nextcloud.middlewares: 'nextcloud_redirectregex'
-    traefik.http.middlewares.nc_redir.redirectregex.permanent: 'true'
-    traefik.http.middlewares.nc_redir.redirectregex.regex: 'https://(.*)/.well-known/(?:card|cal)dav'
-    traefik.http.middlewares.nc_redir.redirectregex.replacement: 'https://$${1}/remote.php/dav'
+    traefik.ingress.kubernetes.io/router.middlewares: nextcloud-headers@kubernetes, nextcloud-redirect@kubernetes
 spec:
   rules:
     - host: {{ .Values.templates.ingress.url }}
