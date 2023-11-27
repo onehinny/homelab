@@ -63,3 +63,13 @@ spec:
               value: "deu"
             - name: PAPERLESS_FILENAME_FORMAT
               value: "{created_year}/{correspondent}/{title}"
+            - name: PAPERLESS_DBPASS
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db-password
+                  name: paperless-db
+            - name: PAPERLESS_DBUSER
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db-user
+                  name: paperless-db
