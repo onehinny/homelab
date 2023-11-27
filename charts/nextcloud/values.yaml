@@ -9,7 +9,7 @@ templates:
     dns_names: 
       - nextcloud.matthiasstein.net
   ingress:
-    # url: nextcloud.matthiasstein.net
+    url: nextcloud.matthiasstein.net
     service: nextcloud
     port: 80
   pv:
