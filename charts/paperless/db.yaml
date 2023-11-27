@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: paperless
+spec:
+  selector:
+    matchLabels:
+      app: db
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - image: postgres:16.1-alpine
+          name: db
+          volumeMounts:
+            - name: db-volume
+              mountPath: /var/lib/postgresql/data
+          resources:
+            limits:
+              memory: 396Mi
+              cpu: 1
+            requests:
+              memory: 32Mi
+              cpu: 1m
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db-password
+                  name: paperless-db
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db-user
+                  name: paperless-db
+      volumes:
+        - name: db-volume
+          hostPath:
+            path: /mnt/data/paperless/postgres
+            type: Directory

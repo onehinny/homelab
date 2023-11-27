@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: paperless
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - image: redis:7.2.3-alpine
+          name: redis
+          command:
+            - redis-server
+            - --save ""
+            - --appendonly no
+          resources:
+            limits:
+              memory: 64Mi
+              cpu: 500m
+            requests:
+              memory: 8Mi
+              cpu: 1m
