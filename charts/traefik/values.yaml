@@ -17,12 +17,6 @@ traefik:
     registry: docker.io
     repository: traefik
     tag: 2.10.5
-  env:
-    - name: CF_DNS_API_TOKEN
-      valueFrom:
-        secretKeyRef:
-          key: apiToken
-          name: cloudflare-api-credentials
   # Removing to allow IP setting
   ports:
       # Configure your entrypoints here...
