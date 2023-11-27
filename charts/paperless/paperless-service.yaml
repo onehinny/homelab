@@ -6,10 +6,9 @@ metadata:
   labels:
     app: paperless
 spec:
-  type: LoadBalancer
   ports:
     - port: 80
-      targetPort: 8000
       name: http
+  clusterIP: None
   selector:
     app: paperless
