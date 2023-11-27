@@ -43,4 +43,4 @@ spec:
         - name: db-volume
           hostPath:
             path: /mnt/data/paperless/postgres
-            type: Directory
+            type: DirectoryOrCreate

@@ -18,7 +18,7 @@ spec:
         - name: paperless-volume
           hostPath:
             path: /mnt/data/paperless
-            type: Directory
+            type: DirectoryOrCreate
       containers:
         - image: ghcr.io/paperless-ngx/paperless-ngx:1.17.4
           name: paperless
