@@ -78,3 +78,18 @@ spec:
                 secretKeyRef:
                   key: paperless-db
                   name: paperless-db
+            - name: PAPERLESS_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-admin-user
+                  name: paperless-db
+            - name: PAPERLESS_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-admin-password
+                  name: paperless-db
+            - name: PAPERLESS_ADMIN_MAIL
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-admin-mail
+                  name: paperless-db
