@@ -58,7 +58,7 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
-  portocol: TCP
+  protocol: TCP
   targetPort: 80
   name: ntfy
 
