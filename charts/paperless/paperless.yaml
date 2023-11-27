@@ -73,3 +73,8 @@ spec:
                 secretKeyRef:
                   key: paperless-db-user
                   name: paperless-db
+            - name: PAPERLESS_DBNAME
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db
+                  name: paperless-db
