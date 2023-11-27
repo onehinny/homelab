@@ -5,9 +5,10 @@ metadata:
   name: {{ .Values.templates.app.name }}
   namespace: {{ .Values.templates.app.namespace }}
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
+    traefik.ingress.kubernetes.io/router.tls: 'true'
     cert-manager.io/cluster-issuer: {{ .Values.templates.certificate.issuer }}
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-nextcloud-headers@kubernetescrd, traefik-nextcloud-redirect@kubernetescrd
 spec:
   rules:
     - host: {{ .Values.templates.ingress.url }}
