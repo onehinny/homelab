@@ -9,6 +9,5 @@ spec:
   ports:
     - port: 8000
       name: http
-  clusterIP: None
   selector:
     app: paperless
