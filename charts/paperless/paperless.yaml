@@ -93,3 +93,5 @@ spec:
                 secretKeyRef:
                   key: paperless-admin-mail
                   name: paperless-db
+            - name: PAPERLESS_URL
+              value: https://paperless.matthiasstein.net
