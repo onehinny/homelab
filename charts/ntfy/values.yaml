@@ -14,7 +14,7 @@ templates:
     service: ntfy
     port: 80
   pv:
-    base_path: "/var/homelab"
+    base_path: "/mnt/data"
     capacity: 1Gi
 
 
