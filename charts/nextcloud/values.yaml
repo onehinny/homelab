@@ -9,19 +9,19 @@ templates:
     dns_names: 
       - nextcloud.matthiasstein.net
   ingress:
-    url: nextcloud.matthiasstein.net
+    # url: nextcloud.matthiasstein.net
     service: nextcloud
     port: 80
   pv:
-    base_path: "/var/homelab"
+    base_path: "/mnt/data"
     capacity: 10Gi
 
 database:
   port: 5432
-  image: postgres:15.4-alpine
+  image: postgres:16.1-alpine
   mountPath: /var/lib/postgresql/data
   volumes:
-    path: /var/homelab/nextcloud/postgres
+    path: /mnt/data/nextcloud/postgres
 
 nextcloud:
   image:
@@ -31,18 +31,24 @@ nextcloud:
 
   volumeMounts:
     - mountPath: "/var/www/html"
-      name: nextcloud-volume
+      name: nextcloud-config
+    - mountPath: "/var/www/html/data"
+      name: nextcloud-data
     - mountPath: "/var/data/paperless/consume"
       name: paperless-volume
   
   volumes:
-    - name: nextcloud-volume
+    - name: nextcloud-config
       hostPath:
-        path: /var/homelab/nextcloud/storage
+        path: /mnt/data/nextcloud/config
+        type: DirectoryOrCreate
+    - name: nextcloud-data
+      hostPath:
+        path: /mnt/data/nextcloud/data
         type: DirectoryOrCreate
     - name: paperless-volume
       hostPath:
-        path: /var/homelab/paperless/consume
+        path: /mnt/data/paperless/consume
         type: DirectoryOrCreate
   resources:
     limits:
@@ -56,8 +62,8 @@ nextcloud:
     - name: NEXTCLOUD_ADMIN_USER
       valueFrom:
         secretKeyRef:
-          name: nextcloud-admin-username
-          key: trusted-domains
+          name: nextcloud
+          key: nextcloud-admin-username
     - name: NEXTCLOUD_ADMIN_PASSWORD
       valueFrom:
         secretKeyRef:
@@ -70,7 +76,6 @@ nextcloud:
           key: trusted-domains
     - name: TRUSTED_PROXIES
       value: '10.0.0.0/8'
-    
     - name: SMTP_NAME
       valueFrom:
         secretKeyRef:
@@ -131,12 +136,6 @@ nextcloud:
         secretKeyRef:
           name: nextcloud-redis
           key: nextcloud-redis-host
-    - name: REDIS_HOST_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: nextcloud-redis
-          key: nextcloud-redis-password
-
   livenessProbe:
     enabled: true
     initialDelaySeconds: 10

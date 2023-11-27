@@ -48,7 +48,3 @@ spec:
             - "sh"
             - "-c"
             - {{ printf "until pg_isready -h %s-db -U ${POSTGRES_USER} ; do sleep 2 ; done" .Values.templates.app.name }}
-        # - name: config-creator
-        #   image: alpine:latest
-        #   command: ["/bin/sh","-c"]
-        #   args: ["mkdir -p /var/www/html/config; cp --recursive /var/config/* /var/www/html/config/; chown -R 33:33 /var/www/html/config"]

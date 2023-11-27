@@ -1,7 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.templates.app.name }}-db-init-script
+  namespace: {{ .Values.templates.app.namespace }}
+data:
+  init_script.sh: |
+    #!/bin/bash
+    set -e
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+
+      CREATE DATABASE $NEXTCLOUD_DB OWNER $POSTGRES_USER TEMPLATE template0 ENCODING 'UTF8';
+      GRANT ALL PRIVILEGES ON DATABASE $NEXTCLOUD_DB TO $POSTGRES_USER;
+      GRANT ALL PRIVILEGES ON SCHEMA public TO $POSTGRES_USER;
+
+    EOSQL
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.templates.app.name }}-db
+  namespace: {{ .Values.templates.app.namespace }}
 spec:
   selector:
     matchLabels:
@@ -20,6 +38,8 @@ spec:
           volumeMounts:
             - name: db-volume
               mountPath: {{ .Values.database.mountPath }}
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
           resources:
             limits:
               memory: 396Mi
@@ -35,8 +55,16 @@ spec:
                 secretKeyRef:
                   key: nextcloud-db-user
                   name: nextcloud-db
+            - name: NEXTCLOUD_DB
+              valueFrom:
+                secretKeyRef:
+                  key: nextcloud-db
+                  name: nextcloud-db
       volumes:
         - name: db-volume
           hostPath:
             path: {{ .Values.database.volumes.path }}
             type: DirectoryOrCreate
+        - name: init-script
+          configMap:
+            name: {{ .Values.templates.app.name }}-db-init-script
