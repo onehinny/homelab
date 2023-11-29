@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: paperless-db-init-script
+  namespace: paperless
+data:
+  init_script.sh: |
+    #!/bin/bash
+    set -e
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+
+      CREATE DATABASE $PAPERLESS_DB OWNER $POSTGRES_USER TEMPLATE template0 ENCODING 'UTF8';
+      GRANT ALL PRIVILEGES ON DATABASE $PAPERLESS_DB TO $POSTGRES_USER;
+      GRANT ALL PRIVILEGES ON SCHEMA public TO $POSTGRES_USER;
+
+    EOSQL
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: paperless
+spec:
+  selector:
+    matchLabels:
+      app: db
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - image: postgres:16.1-alpine
+          name: db
+          volumeMounts:
+            - name: db-volume
+              mountPath: /var/lib/postgresql/data
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+          resources:
+            limits:
+              memory: 396Mi
+              cpu: 1
+            requests:
+              memory: 32Mi
+              cpu: 1m
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db-password
+                  name: paperless-db
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db-user
+                  name: paperless-db
+            - name: PAPERLESS_DB
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db
+                  name: paperless-db
+      volumes:
+        - name: db-volume
+          hostPath:
+            path: /mnt/data/paperless/postgres
+            type: DirectoryOrCreate
+        - name: init-script
+          configMap:
+            name: paperless-db-init-script

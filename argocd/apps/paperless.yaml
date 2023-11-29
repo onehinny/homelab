@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: paperless
+    namespace: argocd
+    finalizers:
+        - resources-finalizer.argocd.argoproj.io
+spec:
+    destination:
+        namespace: paperless
+        server: https://kubernetes.default.svc
+    project: default
+    source:
+        repoURL: https://github.com/onehinny/homelab.git
+        path: charts/paperless
+        targetRevision: main
+    syncPolicy:
+        automated:
+            prune: true
+            selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
