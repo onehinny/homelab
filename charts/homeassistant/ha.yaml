@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homeassistant
+  namespace: homeassistant
+spec:
+  selector:
+    matchLabels:
+      app: homeassistant
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: homeassistant
+    spec:
+      terminationGracePeriodSeconds: 10
+      hostNetwork: false
+      containers:
+        - image: ghcr.io/home-assistant/home-assistant:2023.12.3
+          name: homeassistant
+          volumeMounts:
+            - name: homeassistant-volume
+              mountPath: /config
+          resources:
+            limits:
+              memory: 1.5Gi
+            #   cpu: 1
+          env:
+            - name: TZ
+              value: Europe/Berlin
+      volumes:
+        - name: homeassistant-volume
+          hostPath:
+            path: /mnt/data/homeassistant
+            type: DirectoryOrCreate
