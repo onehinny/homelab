@@ -13,6 +13,9 @@ templates:
   dashboard_auth: true
 
 traefik:
+  env:
+    - name: TZ # set timezone
+      value: Europe/Berlin
   image:
     registry: docker.io
     repository: traefik
