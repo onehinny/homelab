@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-    name: mqtt
+    name: mosquitto
     namespace: argocd
     finalizers:
         - resources-finalizer.argocd.argoproj.io
 spec:
     destination:
-        namespace: mqtt
+        namespace: mosquitto
         server: https://kubernetes.default.svc
     project: default
     source:
         repoURL: https://github.com/onehinny/homelab.git
-        path: charts/mqtt
+        path: charts/mosquitto
         targetRevision: main
     syncPolicy:
         automated:
