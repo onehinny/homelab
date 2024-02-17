@@ -14,7 +14,7 @@ spec:
       protocol: TCP
       port: 21063
       targetPort: 21063
-    - name: mDNS
+    - name: mdns
       protocol: UDP
       port: 5353
       targetPort: 5353
