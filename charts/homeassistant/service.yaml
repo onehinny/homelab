@@ -7,8 +7,18 @@ metadata:
   labels:
     app: homeassistant
 spec:
+  type: LoadBalancer
   ports:
-    - port: 8123
-      name: http
+    - name: http
+      port: 8123
+      targetPort: 8123
+    - name: homekit
+      protocol: TCP
+      port: 21063
+      targetPort: 21063
+    - name: mdns
+      protocol: UDP
+      port: 5353
+      targetPort: 5353
   selector:
     app: homeassistant
