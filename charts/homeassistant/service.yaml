@@ -11,6 +11,7 @@ spec:
   ports:
     - name: http
       port: 8123
+      targetPort: 8123
     - name: homekit
       protocol: TCP
       port: 21063
