@@ -16,7 +16,7 @@ spec:
       protocol: TCP
       port: 21063
       targetPort: 21063
-    - name: homekit_2
+    - name: homekit-2
       protocol: TCP
       port: 21065
       targetPort: 21065
