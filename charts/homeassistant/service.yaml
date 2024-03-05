@@ -16,6 +16,10 @@ spec:
       protocol: TCP
       port: 21063
       targetPort: 21063
+    - name: homekit_2
+      protocol: TCP
+      port: 21065
+      targetPort: 21065
     - name: mdns
       protocol: UDP
       port: 5353
