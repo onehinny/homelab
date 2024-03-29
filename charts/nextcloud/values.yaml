@@ -26,7 +26,7 @@ database:
 nextcloud:
   image:
     repository: nextcloud
-    tag: 28.0.3
+    tag: 28.0.4
     pullPolicy: IfNotPresent
 
   volumeMounts:
