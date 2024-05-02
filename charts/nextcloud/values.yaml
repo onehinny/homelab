@@ -53,7 +53,7 @@ nextcloud:
   resources:
     limits:
       memory: 1024Mi
-      cpu: 1000m
+      # cpu: 1000m
   
   # Number of replicas to be deployed
   replicaCount: 1
