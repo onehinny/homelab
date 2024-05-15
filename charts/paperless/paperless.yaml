@@ -20,7 +20,7 @@ spec:
             path: /mnt/data/paperless
             type: DirectoryOrCreate
       containers:
-        - image: ghcr.io/paperless-ngx/paperless-ngx:2.7.2
+        - image: ghcr.io/paperless-ngx/paperless-ngx:2.8.5
           name: paperless
           resources:
             limits:
