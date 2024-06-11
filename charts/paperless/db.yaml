@@ -34,7 +34,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - image: postgres:16.2-alpine
+        - image: postgres:16.3-alpine
           name: db
           volumeMounts:
             - name: db-volume
