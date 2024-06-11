@@ -19,13 +19,13 @@ traefik:
   image:
     registry: docker.io
     repository: traefik
-    tag: 2.11.2
+    tag: 3.0.2
   # Removing to allow IP setting
   ports:
       # Configure your entrypoints here...
     web:
       # (optional) Permanent Redirect to HTTPS
-      redirectTo: websecure
+      redirectTo.port: websecure
     websecure:
         tls:
         enabled: true

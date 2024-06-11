@@ -13,7 +13,7 @@ spec:
       {{- if .Values.templates.dashboard_auth }}
       middlewares:
       - name: auth
-      - name: local-ipwhitelist
+      - name: local-ipallowlist
       {{- end }}  
       services:
       - name: api@internal
