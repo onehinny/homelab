@@ -16,7 +16,7 @@ templates:
 replicaCount: 1
 
 image:
-  repository: onlyoffice/documentserver-ee
+  repository: onlyoffice/documentserver
   tag: 8.1.0
   pullPolicy: IfNotPresent
 
