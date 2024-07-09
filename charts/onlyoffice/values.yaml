@@ -4,8 +4,8 @@ templates:
     namespace: onlyoffice
   certificate: 
     install: false
-    issuer: letsencrypt-staging
-    # issuer: letsencrypt-production
+    # issuer: letsencrypt-staging
+    issuer: letsencrypt-production
     dns_names: 
       - onlyoffice.matthiasstein.net
   ingress:
