@@ -3,7 +3,7 @@ argo-cd:
     image:
       repository: quay.io/argoproj/argocd
       tag: v2.11.3
-  controller: 
+  controller:
     image:
       repository: quay.io/argoproj/argocd
       tag: v2.11.3
@@ -29,11 +29,11 @@ templates:
   app:
     name: argocd
     namespace: argocd
-  certificate: 
+  certificate:
     install: false
     # issuer: letsencrypt-staging
     issuer: letsencrypt-production
-    dns_names: 
+    dns_names:
       - argocd.matthiasstein.net
   ingress:
     url: argocd.matthiasstein.net

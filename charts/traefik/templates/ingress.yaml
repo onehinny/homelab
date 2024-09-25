@@ -14,7 +14,7 @@ spec:
       middlewares:
       - name: auth
       - name: local-ipallowlist
-      {{- end }}  
+      {{- end }}
       services:
       - name: api@internal
         kind: TraefikService

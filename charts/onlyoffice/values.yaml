@@ -1,0 +1,57 @@
+templates:
+  app:
+    name: onlyoffice
+    namespace: onlyoffice
+  certificate:
+    install: false
+    # issuer: letsencrypt-staging
+    issuer: letsencrypt-production
+    dns_names:
+      - onlyoffice.matthiasstein.net
+  ingress:
+    url: onlyoffice.matthiasstein.net
+    service: onlyoffice
+    port: 80
+
+replicaCount: 1
+
+image:
+  repository: onlyoffice/documentserver
+  tag: 8.1.3
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+persistence:
+  volumes:
+    logs:
+      enabled: true
+      mountPath: /var/log/onlyoffice
+      hostPath: /mnt/data/onlyoffice/logs
+      size: 1Gi
+      storageClass: ""
+    data:
+      enabled: true
+      mountPath: /var/www/onlyoffice/Data
+      hostPath: /mnt/data/onlyoffice/data
+      size: 1Gi
+      storageClass: ""
+    cache:
+      enabled: true
+      mountPath: /var/lib/onlyoffice
+      hostPath: /mnt/data/onlyoffice/cache
+      size: 1Gi
+      storageClass: ""
+    database:
+      enabled: true
+      mountPath: /var/lib/postgresql
+      hostPath: /mnt/data/onlyoffice/database
+      size: 1Gi
+      storageClass: ""
+
+license:
+  secretName: onlyoffice-license
+  mountPath: /var/www/onlyoffice/Data
+  licenseFileName: license.lic

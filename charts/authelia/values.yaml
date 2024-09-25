@@ -2,11 +2,11 @@ templates:
   app:
     name: authelia
     namespace: authelia
-  certificate: 
+  certificate:
     install: false
     # issuer: letsencrypt-staging
     issuer: letsencrypt-production
-    dns_names: 
+    dns_names:
       - auth.matthiasstein.net
   ingress:
     url: auth.matthiasstein.net
@@ -364,7 +364,7 @@ authelia:
         successThreshold: 1
         failureThreshold: 6
 
-    extraVolumeMounts: 
+    extraVolumeMounts:
       - mountPath: "/config"
         name: data
     extraVolumes:
@@ -930,7 +930,7 @@ authelia:
         policy: bypass
         networks:
           - private
-      - domain: 
+      - domain:
         - "*.matthiasstein.net"
         - matthiasstein.net
         policy: two_factor
@@ -1342,14 +1342,14 @@ authelia:
           ## allowed_origins_from_client_redirect_uris option is enabled.
           # allowed_origins:
           #   - https://matthiasstein.net
-          # allowed_origins: 
+          # allowed_origins:
           #   - "*"
 
           ## Automatically adds the origin portion of all redirect URI's on all clients to the list of allowed_origins,
           ## provided they have the scheme http or https and do not have the hostname of localhost.
           allowed_origins_from_client_redirect_uris: false
 
-        clients: 
+        clients:
         - id: nextcloud
           description: NextCloud
           secret: '$pbkdf2-sha512$310000$sVawCsh6PgLIBo5ZqhPPgA$WGWmXxu6H2MQ/fVg2AeVUXLHHHgK9uHJdzBtTW6/cobDYeGiKuMWBfUGe/9UHOSdYuVNilCnxb8PdeRb7mKFUA'

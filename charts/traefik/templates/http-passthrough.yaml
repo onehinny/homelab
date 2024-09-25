@@ -26,7 +26,7 @@ spec:
   routes:
   - match: Host(`{{ trimPrefix "https://" .domain }}`)
     kind: Rule
-    priority: 5 
+    priority: 5
     services:
     - kind: Service
       name: app-passthrough-{{ .name }}

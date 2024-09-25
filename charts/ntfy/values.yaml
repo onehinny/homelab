@@ -3,11 +3,11 @@ templates:
   app:
     name: ntfy
     namespace: ntfy
-  certificate: 
+  certificate:
     install: false
     # issuer: letsencrypt-staging
     issuer: letsencrypt-production
-    dns_names: 
+    dns_names:
       - ntfy.matthiasstein.net
   ingress:
     url: ntfy.matthiasstein.net
@@ -111,7 +111,7 @@ env:
   - name: NTFY_LOG_LEVEL # adjust log level
     value: INFO
 
-args: serve 
+args: serve
 
 volumeMounts:
   - mountPath: /etc/ntfy/server.yml
@@ -127,4 +127,3 @@ volumes:
   - name: cache-volume
     persistentVolumeClaim: # stores /cache/ntfy in defined pv
       claimName: ntfy
-
