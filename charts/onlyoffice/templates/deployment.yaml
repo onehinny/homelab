@@ -27,7 +27,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: onlyoffice-jwt-secret
-                  key: secret
+                  key: jwt-secret
           volumeMounts:
             {{- range $key, $value := .Values.persistence.volumes }}
             {{- if $value.enabled }}
@@ -35,9 +35,6 @@ spec:
               mountPath: {{ $value.mountPath }}
             {{- end }}
             {{- end }}
-            - name: onlyoffice-license
-              mountPath: {{ .Values.license.mountPath }}/{{ .Values.license.licenseFileName }}
-              subPath: {{ .Values.license.licenseFileName }}
       volumes:
         {{- range $key, $value := .Values.persistence.volumes }}
         {{- if $value.enabled }}
@@ -47,6 +44,3 @@ spec:
             type: DirectoryOrCreate
         {{- end }}
         {{- end }}
-        - name: onlyoffice-license
-          secret:
-            secretName: {{ .Values.license.secretName }}

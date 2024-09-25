@@ -8,6 +8,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
     cert-manager.io/cluster-issuer: {{ .Values.templates.certificate.issuer }}
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-onlyoffice-headers@kubernetescrd
 spec:
   rules:
     - host: {{ .Values.templates.ingress.url }}
