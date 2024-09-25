@@ -4,7 +4,7 @@ metadata:
   name: onlyoffice-headers
 spec:
   headers:
-    accessControlAllowOriginList: 
+    accessControlAllowOriginList:
       - "*"
     customRequestHeaders:
       X-Forwarded-Proto: "https"

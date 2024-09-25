@@ -33,7 +33,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - image: {{ .Values.database.image }} 
+        - image: {{ .Values.database.image }}
           name: {{ .Values.templates.app.name }}-db
           volumeMounts:
             - name: db-volume

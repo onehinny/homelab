@@ -2,10 +2,10 @@ templates:
   app:
     name: traefik
     namespace: traefik
-  certificate: 
+  certificate:
       install: false
       issuer: letsencrypt-staging # letsencrypt-production
-      dns_names: 
+      dns_names:
           - traefik.matthiasstein.net
   http_redirect:
       enable: false
@@ -55,7 +55,7 @@ traefik:
   ingressClass:
     enabled: true
     isDefaultClass: true
-  
+
   logs:
     # Configure log settings here...
     general:

@@ -13,7 +13,7 @@ spec:
         path: argocd/apps
         targetRevision: main
     syncPolicy:
-        automated: 
+        automated:
             selfHeal: true
         syncOptions:
           - CreateNamespace=true

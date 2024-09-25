@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: [{{- .Values.args | quote}}]
           env:
-            {{- toYaml .Values.env | nindent 12 }} 
+            {{- toYaml .Values.env | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

@@ -2,11 +2,11 @@ templates:
   app:
     name: nextcloud
     namespace: nextcloud
-  certificate: 
+  certificate:
     install: false
     # issuer: letsencrypt-staging
     issuer: letsencrypt-production
-    dns_names: 
+    dns_names:
       - nextcloud.matthiasstein.net
   ingress:
     url: nextcloud.matthiasstein.net
@@ -36,7 +36,7 @@ nextcloud:
       name: nextcloud-data
     - mountPath: "/var/data/paperless/consume"
       name: paperless-volume
-  
+
   volumes:
     - name: nextcloud-config
       hostPath:
@@ -54,7 +54,7 @@ nextcloud:
     limits:
       memory: 1024Mi
       # cpu: 1000m
-  
+
   # Number of replicas to be deployed
   replicaCount: 1
   revisionHistoryLimit: 3

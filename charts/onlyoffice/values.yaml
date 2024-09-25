@@ -2,17 +2,17 @@ templates:
   app:
     name: onlyoffice
     namespace: onlyoffice
-  certificate: 
+  certificate:
     install: false
     # issuer: letsencrypt-staging
     issuer: letsencrypt-production
-    dns_names: 
+    dns_names:
       - onlyoffice.matthiasstein.net
   ingress:
     url: onlyoffice.matthiasstein.net
     service: onlyoffice
     port: 80
-    
+
 replicaCount: 1
 
 image:
