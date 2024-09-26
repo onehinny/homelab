@@ -4,8 +4,8 @@ templates:
     namespace: immich
   certificate:
     install: false
-    issuer: letsencrypt-staging
-    # issuer: letsencrypt-production
+    # issuer: letsencrypt-staging
+    issuer: letsencrypt-production
     dns_names:
       - immich.matthiasstein.net
   ingress:
