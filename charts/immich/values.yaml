@@ -38,7 +38,7 @@ immich:
           key: password
 
   image:
-    tag: v1.106.1
+    tag: v1.116.0
 
   immich:
     metrics:
