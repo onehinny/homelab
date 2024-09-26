@@ -1,0 +1,122 @@
+templates:
+  app:
+    name: immich
+    namespace: immich
+  certificate:
+    install: false
+    issuer: letsencrypt-staging
+    # issuer: letsencrypt-production
+    dns_names:
+      - immich.matthiasstein.net
+  ingress:
+    url: immich.matthiasstein.net
+    service: immich-server
+    port: 3001
+  pv:
+    base_path: "/mnt/data"
+    capacity: 50Gi
+
+immich:
+  ## This chart relies on the common library chart from bjw-s
+  ## You can find it at https://github.com/bjw-s/helm-charts/tree/main/charts/library/common
+  ## Refer there for more detail about the supported values
+
+  # These entries are shared between all the Immich components
+
+  env:
+    LOG_LEVEL: verbose
+    TZ: Europe/Berlin
+    REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
+    DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
+    DB_USERNAME: "{{ .Values.postgresql.global.postgresql.auth.username }}"
+    DB_DATABASE_NAME: "{{ .Values.postgresql.global.postgresql.auth.database }}"
+    IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+    DB_PASSWORD:
+      valueFrom:
+        secretKeyRef:
+          name: postgresql
+          key: password
+
+  image:
+    tag: v1.106.1
+
+  immich:
+    metrics:
+      # Enabling this will create the service monitors needed to monitor immich with the prometheus operator
+      enabled: false
+    persistence:
+      # Main data store for all photos shared between different components.
+      library:
+        # Automatically creating the library volume is not supported by this chart
+        # You have to specify an existing PVC to use
+        existingClaim: immich
+    # configuration is immich-config.json converted to yaml
+    # ref: https://immich.app/docs/install/config-file/
+    #
+    configuration: {}
+      # trash:
+      #   enabled: false
+      #   days: 30
+      # storageTemplate:
+      #   enabled: true
+      #   template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
+
+  # Dependencies
+
+  postgresql:
+    enabled: true
+    image:
+      repository: tensorchord/pgvecto-rs
+      tag: pg14-v0.2.0
+    global:
+      postgresql:
+        auth:
+          existingSecret: postgresql
+    primary:
+      initdb:
+        scripts:
+          create-extensions.sql: |
+            CREATE EXTENSION cube;
+            CREATE EXTENSION earthdistance;
+            CREATE EXTENSION vectors;
+
+  redis:
+    enabled: true
+    architecture: standalone
+    auth:
+      enabled: false
+
+  # Immich components
+
+  server:
+    enabled: true
+    image:
+      repository: ghcr.io/immich-app/immich-server
+      pullPolicy: IfNotPresent
+    ingress:
+      main:
+        enabled: false
+        annotations:
+          # proxy-body-size is set to 0 to remove the body limit on file uploads
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        hosts:
+          - host: immich.local
+            paths:
+              - path: "/"
+        tls: []
+
+  machine-learning:
+    enabled: true
+    image:
+      repository: ghcr.io/immich-app/immich-machine-learning
+      pullPolicy: IfNotPresent
+    env:
+      TRANSFORMERS_CACHE: /cache
+    persistence:
+      cache:
+        enabled: true
+        size: 10Gi
+        # Optional: Set this to pvc to avoid downloading the ML models every start.
+        type: emptyDir
+        accessMode: ReadWriteMany
+        # storageClass: your-class
