@@ -13,7 +13,7 @@ spec:
     source:
         repoURL: https://github.com/onehinny/homelab.git
         path: charts/immich
-        targetRevision: immich
+        targetRevision: main
         helm:
             valueFiles:
                 - values.yaml
