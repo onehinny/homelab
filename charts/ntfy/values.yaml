@@ -27,7 +27,7 @@ replicaCount: 1
 image:
   repository: "binwiederhier/ntfy"
   pullPolicy: IfNotPresent
-  tag: "v1.28.0"
+  tag: "v2.11.0"
 
 imagePullSecrets: []
 nameOverride: ""
