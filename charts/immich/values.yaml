@@ -11,7 +11,7 @@ templates:
   ingress:
     url: immich.matthiasstein.net
     service: immich-server
-    port: 3001
+    port: 2283
   pv:
     base_path: "/mnt/data"
     capacity: 50Gi
@@ -39,7 +39,7 @@ immich:
 
   image:
     repository: ghcr.io/immich-app/immich-server
-    tag: v1.116.0
+    tag: v1.118.2
 
   immich:
     metrics:
