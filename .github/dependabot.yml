@@ -3,7 +3,7 @@
 version: 2
 updates:
   - package-ecosystem: "docker"
-    directories: 
+    directories:
       - "/charts/*"
     schedule:
       interval: "daily"

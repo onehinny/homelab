@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Values.templates.app.namespace }}
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls: "true"
     cert-manager.io/cluster-issuer: {{ .Values.templates.certificate.issuer }}
     traefik.ingress.kubernetes.io/router.middlewares: traefik-onlyoffice-headers@kubernetescrd
