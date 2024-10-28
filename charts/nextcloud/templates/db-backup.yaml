@@ -20,7 +20,7 @@ spec:
               resources:
                 limits:
                   memory: 396Mi
-              command: ["sh", "-c", "pg_dumpall --database $NEXTCLOUD_DB -c --if-exists > /tmp/backup/backup.sql"]
+              command: ["sh", "-c", "pg_dumpall --database=$NEXTCLOUD_DB -c --if-exists > /tmp/backup/backup.sql"]
           env:
             - name: PGHOST
               valueFrom:
