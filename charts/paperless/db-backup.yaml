@@ -20,8 +20,13 @@ spec:
               resources:
                 limits:
                   memory: 396Mi
-              command: ["sh", "-c", "pg_dumpall -h db -c --if-exists > /tmp/backup/backup.sql"]
+              command: ["sh", "-c", "pg_dumpall -h db --database=$PAPERLESS_DB -c --if-exists > /tmp/backup/backup.sql"]
           env:
+            - name: PAPERLESS_DB
+              valueFrom:
+                secretKeyRef:
+                  key: paperless-db
+                  name: paperless-db
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:

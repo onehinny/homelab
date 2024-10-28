@@ -20,8 +20,13 @@ spec:
               resources:
                 limits:
                   memory: 396Mi
-              command: ["sh", "-c", "pg_dumpall -h db -c --if-exists > /tmp/backup/backup.sql"]
+              command: ["sh", "-c", "pg_dumpall --database $NEXTCLOUD_DB -c --if-exists > /tmp/backup/backup.sql"]
           env:
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-db
+                  key: nextcloud-db-host
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
@@ -31,6 +36,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: nextcloud-db-user
+                  name: nextcloud-db
+            - name: NEXTCLOUD_DB
+              valueFrom:
+                secretKeyRef:
+                  key: nextcloud-db
                   name: nextcloud-db
           volumes:
             - name: backup-volume
