@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: db-backup
 spec:
-  schedule: "05 01 20 * *"
+  schedule: "05 01 * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
