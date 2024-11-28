@@ -68,7 +68,7 @@ immich:
     enabled: true
     image:
       repository: tensorchord/pgvecto-rs
-      tag: pg14-v0.4.0
+      tag: pg14-v0.3.0
     global:
       postgresql:
         auth:
