@@ -418,10 +418,10 @@ openproject:
   #
   service:
     enabled: true
-    type: "ClusterIP"
+    type: "LoadBalancer"
+    loadBalancerIP: "192.168.10.227"
     ports:
       http:
-        containerPort: 8080
         port: 8080
         protocol: "TCP"
     sessionAffinity:
