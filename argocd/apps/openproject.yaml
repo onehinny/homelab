@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: openproject
+    namespace: openproject
+    finalizers:
+        - resources-finalizer.argocd.argoproj.io
+spec:
+    destination:
+        namespace: openproject
+        server: kube02
+    project: default
+    source:
+        repoURL: https://github.com/onehinny/homelab.git
+        path: charts/openproject
+        targetRevision: openproject
+        helm:
+            valueFiles:
+                - values.yaml
+    syncPolicy:
+        automated:
+            prune: true
+            selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
