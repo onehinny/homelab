@@ -61,7 +61,11 @@ traefik:
     general:
         level: INFO
 
-  # additionalArguments:
+  additionalArguments:
+    - "--providers.kubernetesingress.allowemptyservices=true"
+    - "--providers.kubernetesingress.allowexternalnameservices=true"
+    - "--providers.kubernetescrd.allowemptyservices=true"
+    - "--providers.kubernetescrd.allowexternalnameservices=true"
   #     - --entrypoints.websecure.http.tls.certresolver=cloudflare
   #     - --entrypoints.websecure.http.tls.domains[0].main=matthiasstein.net
   #     - --entrypoints.websecure.http.tls.domains[0].sans=*.matthiasstein.net
