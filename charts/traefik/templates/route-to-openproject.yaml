@@ -19,7 +19,7 @@ spec:
     - match: Host(`openproject.matthiasstein.net`)
       kind: Rule
       priority: 5
-      services:
-        - kind: Service
-          name: openproject
-          port: 8080
+  services:
+    - kind: Service
+      name: openproject
+      port: 8080
