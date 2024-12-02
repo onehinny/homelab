@@ -2,16 +2,17 @@ templates:
   app:
     name: openproject
     namespace: openproject
-  certificate:
-    install: false
-    issuer: letsencrypt-staging
-    # issuer: letsencrypt-production
-    dns_names:
-      - openproject.matthiasstein.net
+  # certificate:
+  #   install: false
+  #   issuer: letsencrypt-staging
+  #   # issuer: letsencrypt-production
+  #   dns_names:
+  #     - openproject.matthiasstein.net
   ingress:
-    url: openproject.matthiasstein.net
-    service: openproject
-    port: 8080
+    url:
+  #   url: openproject.matthiasstein.net
+  #   service: openproject
+  #   port: 8080
 
 openproject:
   ## Define additional environment variables.
@@ -69,7 +70,8 @@ openproject:
   ## Ref.: https://kubernetes.io/docs/concepts/services-networking/ingress/
   #
   ingress:
-    enabled: false
+    enabled: true
+    host: openproject.matthiasstein.net
 
   image:
     registry: "docker.io"
