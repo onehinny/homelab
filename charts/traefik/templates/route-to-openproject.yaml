@@ -1,12 +1,14 @@
-apiVersion: traefik.io/v1alpha1
 kind: Service
+apiVersion: v1
 metadata:
   name: openproject
 spec:
-  loadBalancer:
-    servers:
-      - url: "https://192.168.10.227:8080"
-    passHostHeader: true
+  type: ExternalName
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  externalName: 192.168.10.227
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -18,8 +20,8 @@ spec:
   routes:
     - match: Host(`openproject.matthiasstein.net`)
       kind: Rule
-      priority: 5
-  services:
-    - kind: Service
-      name: openproject
-      port: 8080
+      priority: 1
+      services:
+        - kind: Service
+          name: openproject
+          port: 8080
