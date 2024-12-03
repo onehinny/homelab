@@ -18,7 +18,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-productive
+    cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
   rules:
     - host: openproject.matthiasstein.net
