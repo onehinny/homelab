@@ -14,7 +14,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: openproject
-  namespace: openproject
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
