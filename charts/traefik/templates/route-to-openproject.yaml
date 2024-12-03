@@ -34,21 +34,5 @@ spec:
                   number: 8080
   tls:
     - hosts:
-      - openproject.matthiasstein.net
+        - openproject.matthiasstein.net
       secretName: openproject-cert
-
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: openproject
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`openproject.matthiasstein.net`)
-      kind: Rule
-      priority: 1
-      services:
-        - kind: Service
-          name: openproject
-          port: 8080
