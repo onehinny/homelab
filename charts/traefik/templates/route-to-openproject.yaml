@@ -10,6 +10,33 @@ spec:
       targetPort: 8080
   externalName: 192.168.10.227
 ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openproject
+  namespace: openproject
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  rules:
+    - host: openproject.matthiasstein.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: openproject
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+      - openproject.matthiasstein.net
+      secretName: openproject-cert
+
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
