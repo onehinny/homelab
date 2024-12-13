@@ -8,7 +8,7 @@ metadata:
 spec:
     destination:
         namespace: onlyoffice
-        server: https://kubernetes.default.svc
+        server: kube02
     project: default
     source:
         repoURL: https://github.com/onehinny/homelab.git
