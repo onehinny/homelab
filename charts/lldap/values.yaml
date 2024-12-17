@@ -1,0 +1,162 @@
+templates:
+  app:
+    name: lldap
+    namespace: lldap
+  certificate:
+    install: false
+    # issuer: letsencrypt-staging
+    issuer: letsencrypt-production
+    dns_names:
+      - lldap.matthiasstein.net
+  ingress:
+    url: lldap.matthiasstein.net
+    port: 17170
+# Default values for lldap.
+
+# -- Number of lldap replicas.
+# Do not increase this above 1 if you are using the SQLite backend.
+replicaCount: 1
+
+image:
+  # -- image repository
+  repository: lldap/lldap
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+  # -- image tag
+  # @default -- chart.appVersion
+  tag: v0.6.1
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+lldap:
+  uid: 1000
+  gid: 1000
+  tz: "Europe/Berlin"
+
+  # -- Tune the logging to be more verbose
+  verbose: false
+
+  # -- Options to configure SMTP parameters, to send password reset emails.
+  # @default -- see below
+  smtp:
+    # -- Whether to enabled password reset via email, from LLDAP.
+    enablePasswordReset: false
+    # -- The SMTP server.
+    server: "smtp.gmail.com"
+    # -- The SMTP port.
+    port: 587
+    # -- How the connection is encrypted, either "NONE" (no encryption), "TLS" or "STARTTLS".
+    smtpEncryption: "TLS"
+    # -- The SMTP user, usually your email address.
+    user: "sender@gmail.com"
+    # -- The SMTP password.
+    password: "password"
+    # -- The header field: how the sender appears in the email. The first
+    # is a free-form name, followed by an email between <>. Optional.
+    from: "LLDAP Admin <sender@gmail.com>"
+    # -- Same for reply-to, optional.
+    replyTo: "Do not reply <noreply@localhost>"
+
+  # -- Options to configure LDAPS
+  # @default -- see below
+  ldaps:
+    # -- Whether to enable LDAPS.
+    enabled: "false"
+    # -- Certificate file.
+    certFile: "/data/cert.pem"
+    # -- Certificate key file.
+    keyFile: "/data/key.pem"
+
+  # --- define extra volumes and mounts for the ldap
+  extraVolumes: []
+  extraVolumeMounts: []
+
+  # -- Ignored attributes.
+  # Some services will request attributes that are not present in LLDAP. When it is the case, LLDAP
+  # will warn about the attribute being unknown. If you want to ignore the attribute and the
+  # service works without, you can add it to this list to silence the warning.
+  # ignored_user_attributes = [ "sAMAccountName" ]
+  # ignored_group_attributes = [ "mail", "userPrincipalName" ]
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: false
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # @default -- a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+deploymentAnnotations: {}
+deploymentLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+service:
+  http:
+    type: ClusterIP
+    port: 17170
+  ldap:
+    type: ClusterIP
+    port: 3890
+  ldaps:
+    type: ClusterIP
+    port: 6360
+# -- Persistence is only required if you are using the SQLite database (default).
+# You can disable persistence if you select MariaDB or PostgreSQL.
+# @default -- see below
+persistence:
+  enabled: true
+  size: 100Mi
+  accessMode: ReadWriteMany
+  storageClass: "longhorn"
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# -- Bootstrap (i.e. create) users and groups automatically.
+# It is safe to run the bootstrap multiple times, however the one-shot
+# Kubernetes job will be created on the first deployment, and the job
+# will not be executed on subsequent deployments unless the job is deleted.
+# @default -- see below
+bootstrap:
+  enabled: true
+  # -- Remove redundant users and groups which are not in the config below
+  cleanup: true

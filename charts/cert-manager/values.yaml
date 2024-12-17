@@ -1,9 +1,10 @@
 cert-manager:
+    crds:
+        enabled: false
     global:
-      leaderElection:
+        leaderElection:
         # Override the namespace used to store the ConfigMap for leader election
-        namespace: "cert-manager"
-    installCRDs: true
+            namespace: "cert-manager"
     extraArgs:
         - --cluster-resource-namespace=cert-manager
         - --enable-certificate-owner-ref=true
@@ -12,14 +13,23 @@ cert-manager:
     image:
         repository: quay.io/jetstack/cert-manager-controller
         tag: v1.16.2
+    extraEnv:
+      - name: TZ
+        value: Europe/Berlin
     webhook:
         image:
             repository: quay.io/jetstack/cert-manager-webhook
             tag: v1.16.2
+        extraEnv:
+          - name: TZ
+            value: Europe/Berlin
     cainjector:
         image:
             repository: quay.io/jetstack/cert-manager-cainjector
             tag: v1.16.2
+        extraEnv:
+          - name: TZ
+            value: Europe/Berlin
 templates:
     letsencrypt:
         production: true
