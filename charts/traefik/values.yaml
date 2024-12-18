@@ -19,7 +19,7 @@ traefik:
   image:
     registry: docker.io
     repository: traefik
-    tag: 3.2.2
+    tag: 3.2.3
   # Removing to allow IP setting
   ports:
       # Configure your entrypoints here...
@@ -27,7 +27,6 @@ traefik:
       # (optional) Permanent Redirect to HTTPS
       redirectTo.port: websecure
     websecure:
-        tls:
         enabled: true
         # (optional) Set a Default CertResolver
         # certResolver: cloudflare
@@ -55,20 +54,13 @@ traefik:
   ingressClass:
     enabled: true
     isDefaultClass: true
-
+  rbac:
+    enabled: true
   logs:
     # Configure log settings here...
     general:
         level: INFO
 
-  # additionalArguments:
-  #     - --entrypoints.websecure.http.tls.certresolver=cloudflare
-  #     - --entrypoints.websecure.http.tls.domains[0].main=matthiasstein.net
-  #     - --entrypoints.websecure.http.tls.domains[0].sans=*.matthiasstein.net
-  #     - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
-  #     - --certificatesresolvers.cloudflare.acme.email=cloud@matthiasstein.net
-  #     - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1
-  #     - --certificatesresolvers.cloudflare.acme.storage=/certs/acme.json
   persistence:
     enabled: true
     path: /certs

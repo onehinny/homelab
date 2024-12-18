@@ -13,7 +13,7 @@ spec:
     source:
         repoURL: https://github.com/onehinny/homelab.git
         path: charts/paperless
-        targetRevision: main
+        targetRevision: longhorn
     syncPolicy:
         automated:
             prune: true
