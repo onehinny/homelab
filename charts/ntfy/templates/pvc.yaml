@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.templates.app.name }}
+  name: ntfy-pvc
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: {{ .Values.templates.app.name }}
+  storageClassName: {{ .Values.templates.pv.storageClass }}
   resources:
     requests:
       storage: {{ .Values.templates.pv.capacity }}

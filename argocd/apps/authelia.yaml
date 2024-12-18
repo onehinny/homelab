@@ -13,7 +13,7 @@ spec:
     source:
         repoURL: https://github.com/onehinny/homelab.git
         path: charts/authelia
-        targetRevision: main
+        targetRevision: longhorn
         helm:
             valueFiles:
                 - values.yaml

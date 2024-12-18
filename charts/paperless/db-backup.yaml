@@ -11,6 +11,8 @@ spec:
       backoffLimit: 0
       template:
         spec:
+          nodeSelector:
+            storage: "host"
           containers:
             - image: postgres:17.2-alpine
               name: db
@@ -20,7 +22,12 @@ spec:
               resources:
                 limits:
                   memory: 396Mi
-              command: ["sh", "-c", "pg_dumpall -h db --database=$PAPERLESS_DB -c --if-exists > /tmp/backup/backup.sql"]
+              command:
+                [
+                  "sh",
+                  "-c",
+                  "pg_dumpall -h db --database=$PAPERLESS_DB -c --if-exists > /tmp/backup/backup.sql",
+                ]
               env:
                 - name: PAPERLESS_DB
                   valueFrom:

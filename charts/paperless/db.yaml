@@ -14,6 +14,8 @@ spec:
       labels:
         app: db
     spec:
+      nodeSelector:
+        storage: "host"
       terminationGracePeriodSeconds: 10
       containers:
         - image: postgres:17.2-alpine
@@ -21,6 +23,8 @@ spec:
           volumeMounts:
             - name: db-volume
               mountPath: /var/lib/postgresql/data
+            - name: db-volume-new
+              mountPath: /tmp/new-postgres
             - name: init-script
               mountPath: /docker-entrypoint-initdb.d
           resources:
@@ -51,6 +55,9 @@ spec:
           hostPath:
             path: /mnt/data/paperless/postgres
             type: DirectoryOrCreate
+        - name: db-volume-new
+          persistentVolumeClaim:
+            claimName: paperless-db
         - name: init-script
           configMap:
             name: paperless-db-init-script

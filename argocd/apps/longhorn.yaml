@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-    name: nextcloud
+    name: longhorn
     namespace: argocd
     finalizers:
         - resources-finalizer.argocd.argoproj.io
 spec:
     destination:
-        namespace: nextcloud
+        namespace: longhorn
         server: https://kubernetes.default.svc
     project: default
     source:
         repoURL: https://github.com/onehinny/homelab.git
-        path: charts/nextcloud
+        path: charts/longhorn
         targetRevision: longhorn
         helm:
             valueFiles:

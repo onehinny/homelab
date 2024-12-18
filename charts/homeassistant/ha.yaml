@@ -13,10 +13,13 @@ spec:
       labels:
         app: homeassistant
     spec:
+      nodeSelector:
+        storage: "host"
+
       terminationGracePeriodSeconds: 10
       hostNetwork: false
       containers:
-        - image: ghcr.io/home-assistant/home-assistant:2024.11.3
+        - image: ghcr.io/home-assistant/home-assistant:2024.12.3
           name: homeassistant
           volumeMounts:
             - name: homeassistant-volume
@@ -24,7 +27,7 @@ spec:
           resources:
             limits:
               memory: 1.5Gi
-            #   cpu: 1
+              cpu: 1
           env:
             - name: TZ
               value: Europe/Berlin

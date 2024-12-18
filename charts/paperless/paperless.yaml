@@ -14,6 +14,8 @@ spec:
       labels:
         app: paperless
     spec:
+      nodeSelector:
+        storage: "host"
       volumes:
         - name: paperless-volume
           hostPath:
