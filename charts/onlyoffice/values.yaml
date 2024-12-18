@@ -29,7 +29,7 @@ persistence:
     logs:
       enabled: true
       mountPath: /var/log/onlyoffice
-      hostPath: /mnt/data/onlyoffice/logs
+      persistentVolumeClaim:
       size: 1Gi
       storageClass: longhorn
     data:

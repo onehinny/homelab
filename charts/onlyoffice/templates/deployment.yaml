@@ -39,8 +39,7 @@ spec:
         {{- range $key, $value := .Values.persistence.volumes }}
         {{- if $value.enabled }}
         - name: onlyoffice-{{ $key }}
-          hostPath:
-            path: {{ $value.hostPath }}
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: onlyoffice-{{ $key }}
         {{- end }}
         {{- end }}
