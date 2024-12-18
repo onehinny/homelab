@@ -13,7 +13,7 @@ spec:
     source:
         repoURL: https://github.com/onehinny/homelab.git
         path: charts/traefik
-        targetRevision: longhorn
+        targetRevision: main
         helm:
             valueFiles:
                 - values.yaml
@@ -22,4 +22,4 @@ spec:
             prune: true
             selfHeal: true
         syncOptions:
-          - CreateNamespace=true
+            - CreateNamespace=true
