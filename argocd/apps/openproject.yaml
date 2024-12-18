@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-    name: immich
+    name: openproject
     namespace: argocd
     finalizers:
         - resources-finalizer.argocd.argoproj.io
 spec:
     destination:
-        namespace: immich
-        server: https://kubernetes.default.svc
+        namespace: openproject
+        name: kube02
     project: default
     source:
         repoURL: https://github.com/onehinny/homelab.git
-        path: charts/immich
-        targetRevision: main
+        path: charts/openproject
+        targetRevision: openproject
         helm:
             valueFiles:
                 - values.yaml

@@ -3,12 +3,12 @@ templates:
     name: traefik
     namespace: traefik
   certificate:
-      install: false
-      issuer: letsencrypt-staging # letsencrypt-production
-      dns_names:
-          - traefik.matthiasstein.net
+    install: false
+    issuer: letsencrypt-staging # letsencrypt-production
+    dns_names:
+      - traefik.matthiasstein.net
   http_redirect:
-      enable: false
+    enable: false
   dashboard_hostname: traefik.matthiasstein.net
   dashboard_auth: true
 
@@ -22,15 +22,14 @@ traefik:
     tag: 3.2.3
   # Removing to allow IP setting
   ports:
-      # Configure your entrypoints here...
+    # Configure your entrypoints here...
     web:
       # (optional) Permanent Redirect to HTTPS
       redirectTo.port: websecure
     websecure:
-        tls:
-        enabled: true
-        # (optional) Set a Default CertResolver
-        # certResolver: cloudflare
+      enabled: true
+      # (optional) Set a Default CertResolver
+      # certResolver: cloudflare
   globalArguments:
     - "--global.checknewversion"
     - "--serversTransport.insecureSkipVerify=true"
@@ -55,20 +54,18 @@ traefik:
   ingressClass:
     enabled: true
     isDefaultClass: true
-
+  rbac:
+    enabled: true
   logs:
     # Configure log settings here...
     general:
-        level: INFO
+      level: INFO
 
-  # additionalArguments:
-  #     - --entrypoints.websecure.http.tls.certresolver=cloudflare
-  #     - --entrypoints.websecure.http.tls.domains[0].main=matthiasstein.net
-  #     - --entrypoints.websecure.http.tls.domains[0].sans=*.matthiasstein.net
-  #     - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
-  #     - --certificatesresolvers.cloudflare.acme.email=cloud@matthiasstein.net
-  #     - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1
-  #     - --certificatesresolvers.cloudflare.acme.storage=/certs/acme.json
+  additionalArguments:
+    - "--providers.kubernetesingress.allowemptyservices=true"
+    - "--providers.kubernetesingress.allowexternalnameservices=true"
+    - "--providers.kubernetescrd.allowemptyservices=true"
+    - "--providers.kubernetescrd.allowexternalnameservices=true"
   persistence:
     enabled: true
     path: /certs

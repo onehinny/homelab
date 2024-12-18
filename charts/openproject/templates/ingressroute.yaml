@@ -1,0 +1,30 @@
+{{- if .Values.templates.ingress.url }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.templates.app.name }}
+  namespace: {{ .Values.templates.app.namespace }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: {{ .Values.templates.certificate.issuer }}
+spec:
+  rules:
+    - host: {{ .Values.templates.ingress.url }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.templates.ingress.service }}
+                port:
+                  number: {{ .Values.templates.ingress.port }}
+  tls:
+    - hosts:
+      {{- range .Values.templates.certificate.dns_names }}
+      - {{ . | quote }}
+      {{- end }}
+      secretName: {{ .Values.templates.app.name }}-cert
+{{- end }}

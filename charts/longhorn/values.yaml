@@ -1,0 +1,23 @@
+templates:
+  app:
+    name: longhorn
+    namespace: longhorn
+  certificate:
+    # issuer: letsencrypt-staging
+    issuer: letsencrypt-production
+    dns_names:
+      - longhorn.matthiasstein.net
+  ingress:
+    url: longhorn.matthiasstein.net
+    service: longhorn-frontend
+    port: 80
+
+
+longhorn:
+  namespaceOverride: longhorn
+  defaultSettings:
+    defaultReplicaCount: 2
+  persistence:
+    defaultClassReplicaCount: 2
+  preUpgradeChecker:
+    jobEnabled: false

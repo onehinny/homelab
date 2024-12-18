@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-    name: ntfy
+    name: lldap
     namespace: argocd
     finalizers:
         - resources-finalizer.argocd.argoproj.io
 spec:
     destination:
-        namespace: ntfy
+        namespace: lldap
         server: https://kubernetes.default.svc
     project: default
     source:
         repoURL: https://github.com/onehinny/homelab.git
-        path: charts/ntfy
+        path: charts/lldap
         targetRevision: main
         helm:
             valueFiles:
