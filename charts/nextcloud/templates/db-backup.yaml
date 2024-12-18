@@ -11,6 +11,8 @@ spec:
       backoffLimit: 0
       template:
         spec:
+          nodeSelector:
+            storage: "host"
           containers:
             - image: postgres:17.0-alpine
               name: db

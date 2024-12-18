@@ -14,6 +14,8 @@ spec:
       labels:
         app: {{ .Values.templates.app.name }}
     spec:
+      nodeSelector:
+        storage: "host"
       containers:
         - image: "{{ .Values.nextcloud.image.repository }}:{{ .Values.nextcloud.image.tag }}"
           name: {{ .Values.templates.app.name }}

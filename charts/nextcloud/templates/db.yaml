@@ -31,6 +31,8 @@ spec:
       labels:
         app: {{ .Values.templates.app.name }}-db
     spec:
+      nodeSelector:
+        storage: "host"
       terminationGracePeriodSeconds: 10
       containers:
         - image: {{ .Values.database.image }}
