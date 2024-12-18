@@ -19,5 +19,5 @@ longhorn:
     defaultReplicaCount: 2
   persistence:
     defaultClassReplicaCount: 2
-  helmPreUpgradeCheckerJob:
-    enabled: false # https://github.com/longhorn/longhorn/issues/6415#issuecomment-1802349558
+  preUpgradeChecker:
+    jobEnabled: false
