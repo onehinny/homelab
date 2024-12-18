@@ -13,6 +13,9 @@ spec:
       labels:
         app: homeassistant
     spec:
+      nodeSelector:
+        storage: "host"
+
       terminationGracePeriodSeconds: 10
       hostNetwork: false
       containers:
@@ -24,7 +27,7 @@ spec:
           resources:
             limits:
               memory: 1.5Gi
-            #   cpu: 1
+              cpu: 1
           env:
             - name: TZ
               value: Europe/Berlin
