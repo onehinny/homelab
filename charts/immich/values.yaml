@@ -78,7 +78,7 @@ immich:
           existingSecret: postgresql
     primary:
       containerSecurityContext:
-        readOnlyRootFilesystem: true
+        readOnlyRootFilesystem: false
       initdb:
         scripts:
           create-extensions.sql: |
