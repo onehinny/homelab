@@ -6,7 +6,7 @@ metadata:
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.middlewares: traefik-forwardauth-authelia@kubernetescrd, traefik-http-redirect@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
     cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
   rules:
@@ -22,5 +22,5 @@ spec:
                   number: 8123
   tls:
     - hosts:
-      - homeassistant.matthiasstein.net
+        - homeassistant.matthiasstein.net
       secretName: homeassistant-cert
