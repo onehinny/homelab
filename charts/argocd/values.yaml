@@ -15,7 +15,7 @@ argo-cd:
   redis:
     image:
       repository: public.ecr.aws/docker/library/redis
-      tag: 7.4.1-alpine
+      tag: 7.4.2-alpine
   server:
     extraArgs:
       # - --insecure
