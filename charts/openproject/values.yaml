@@ -2,17 +2,16 @@ templates:
   app:
     name: openproject
     namespace: openproject
-  # certificate:
-  #   install: false
-  #   issuer: letsencrypt-staging
-  #   # issuer: letsencrypt-production
-  #   dns_names:
-  #     - openproject.matthiasstein.net
+  certificate:
+    install: false
+    #   issuer: letsencrypt-staging
+    issuer: letsencrypt-production
+    dns_names:
+      - openproject.matthiasstein.net
   ingress:
-    url:
-  #   url: openproject.matthiasstein.net
-  #   service: openproject
-  #   port: 8080
+    url: openproject.matthiasstein.net
+    service: openproject
+    port: 8080
 
 openproject:
   ## Define additional environment variables.
@@ -117,6 +116,24 @@ openproject:
     #   rollingUpdate:
     #     maxSurge: 30%
     #     maxUnavailable: 30%
+
+  cron:
+    enabled: false
+    ## See documentation referenced above for all variables.
+    environment:
+      IMAP_HOST:
+      IMAP_USERNAME:
+      IMAP_PASSWORD:
+      IMAP_PORT: 993
+
+    ## To avoid having sensitive credentials in your values.yaml, the preferred way is to
+    ## use an existing secret containing the IMAP credentials.
+    ## Specify the name of this existing secret here.
+    existingSecret:
+    ## In case your secret does not use the default keys in the secret, you can adjust them here.
+    secretKeys:
+      imapUsername: imapUsername
+      imapPassword: imapPassword
 
   # Define the workers to run, their queues, replicas, strategy, and resources
   workers:
