@@ -120,11 +120,9 @@ openproject:
   cron:
     enabled: false
     ## See documentation referenced above for all variables.
-    # environment:
-    #   IMAP_HOST:
-    #   IMAP_USERNAME:
-    #   IMAP_PASSWORD:
-    #   IMAP_PORT: 993
+    environment:
+      IMAP_HOST: test
+      IMAP_PORT: 993
 
     ## To avoid having sensitive credentials in your values.yaml, the preferred way is to
     ## use an existing secret containing the IMAP credentials.
