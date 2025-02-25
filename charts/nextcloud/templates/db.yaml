@@ -14,6 +14,11 @@ data:
       GRANT ALL PRIVILEGES ON SCHEMA public TO $POSTGRES_USER;
 
     EOSQL
+
+    if [ -f /var/lib/postgresql/data/backup.sql ]; then
+      PGPASSWORD="$POSTGRES_PASSWORD" psql --username "$POSTGRES_USER" -d "$NEXTCLOUD_DB" -f /var/lib/postgresql/data/backup.sql
+      rm /var/lib/postgresql/data/backup.sql
+    fi
 ---
 apiVersion: apps/v1
 kind: Deployment
