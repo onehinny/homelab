@@ -15,9 +15,9 @@ data:
 
     EOSQL
 
-    if [ -f /var/lib/postgresql/data/backup.sql ]; then
-      PGPASSWORD="$POSTGRES_PASSWORD" psql --username "$POSTGRES_USER" -d "$NEXTCLOUD_DB" -f /var/lib/postgresql/data/backup.sql
-      rm /var/lib/postgresql/data/backup.sql
+    if [ -f $BACKUP_IMPORT_PATH/$BACKUP_FILE ]; then
+      PGPASSWORD="$POSTGRES_PASSWORD" psql --username "$POSTGRES_USER" -d "$NEXTCLOUD_DB" -f $BACKUP_IMPORT_PATH/$BACKUP_FILE
+      rm $BACKUP_IMPORT_PATH/$BACKUP_FILE
     fi
 ---
 apiVersion: apps/v1
@@ -45,6 +45,8 @@ spec:
           volumeMounts:
             - name: db-volume
               mountPath: {{ .Values.database.mountPath }}
+            - name: db-backup-import
+              mountPath: {{ .Values.database.backupImportPath }}
             - name: init-script
               mountPath: /docker-entrypoint-initdb.d
           resources:
@@ -67,10 +69,17 @@ spec:
                 secretKeyRef:
                   key: nextcloud-db
                   name: nextcloud-db
+            - name: BACKUP_IMPORT_PATH
+              value: {{ .Values.database.backupImportPath }}
+            - name: BACKUP_FILE
+              value: {{ .Values.database.backupFile }}
       volumes:
         - name: db-volume
           hostPath:
             path: {{ .Values.database.volumes.path }}
+            type: DirectoryOrCreate
+          hostPath:
+            path: {{ .Values.database.volumes.backupImportPath }}
             type: DirectoryOrCreate
         - name: init-script
           configMap:

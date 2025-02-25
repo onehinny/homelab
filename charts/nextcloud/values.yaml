@@ -20,8 +20,11 @@ database:
   port: 5432
   image: postgres:17.4-alpine
   mountPath: /var/lib/postgresql/data
+  backupImportPath: /tmp/backup
+  backupFile: backup.sql
   volumes:
     path: /mnt/data/nextcloud/postgres
+    backupImportPath: /mnt/data/nextcloud/backup
 
 nextcloud:
   image:
@@ -75,7 +78,7 @@ nextcloud:
           name: nextcloud
           key: trusted-domains
     - name: TRUSTED_PROXIES
-      value: '10.0.0.0/8'
+      value: "10.0.0.0/8"
     - name: SMTP_NAME
       valueFrom:
         secretKeyRef:
