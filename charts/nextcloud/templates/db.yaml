@@ -78,6 +78,7 @@ spec:
           hostPath:
             path: {{ .Values.database.volumes.path }}
             type: DirectoryOrCreate
+        - name: db-backup-import
           hostPath:
             path: {{ .Values.database.volumes.backupImportPath }}
             type: DirectoryOrCreate
