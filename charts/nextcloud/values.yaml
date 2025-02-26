@@ -29,7 +29,7 @@ database:
 nextcloud:
   image:
     repository: nextcloud
-    tag: 30.0.6
+    tag: 31.0.0
     pullPolicy: IfNotPresent
 
   volumeMounts:
