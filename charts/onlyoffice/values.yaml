@@ -17,7 +17,7 @@ replicaCount: 1
 
 image:
   repository: onlyoffice/documentserver
-  tag: 8.3.1
+  tag: 8.3.2
   pullPolicy: IfNotPresent
 
 service:
