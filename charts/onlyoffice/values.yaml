@@ -27,24 +27,28 @@ service:
 persistence:
   volumes:
     logs:
+      storageClass: local-path
       enabled: true
       mountPath: /var/log/onlyoffice
       persistentVolumeClaim:
-      size: 1Gi
+      size: 100Mi
 
     data:
+      storageClass: local-path
       enabled: true
       mountPath: /var/www/onlyoffice/Data
       hostPath: /mnt/data/onlyoffice/data
       size: 1Gi
 
     cache:
+      storageClass: local-path
       enabled: true
       mountPath: /var/lib/onlyoffice
       hostPath: /mnt/data/onlyoffice/cache
       size: 1Gi
 
     database:
+      storageClass: local-path
       enabled: true
       mountPath: /var/lib/postgresql
       hostPath: /mnt/data/onlyoffice/database
