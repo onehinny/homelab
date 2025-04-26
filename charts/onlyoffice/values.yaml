@@ -31,25 +31,24 @@ persistence:
       mountPath: /var/log/onlyoffice
       persistentVolumeClaim:
       size: 1Gi
-      storageClass: longhorn
+
     data:
       enabled: true
       mountPath: /var/www/onlyoffice/Data
       hostPath: /mnt/data/onlyoffice/data
       size: 1Gi
-      storageClass: longhorn
+
     cache:
       enabled: true
       mountPath: /var/lib/onlyoffice
       hostPath: /mnt/data/onlyoffice/cache
       size: 1Gi
-      storageClass: longhorn
+
     database:
       enabled: true
       mountPath: /var/lib/postgresql
       hostPath: /mnt/data/onlyoffice/database
       size: 1Gi
-      storageClass: longhorn
 
 license:
   secretName: onlyoffice-license

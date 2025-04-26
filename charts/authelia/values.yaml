@@ -11,10 +11,10 @@ authelia:
 
   rbac:
     enabled: true
-    serviceAccountName: 'authelia'
+    serviceAccountName: "authelia"
 
   service:
-    type: 'ClusterIP'
+    type: "ClusterIP"
     annotations: {}
     labels: {}
     port: 80
@@ -35,7 +35,7 @@ authelia:
     rewriteTarget: false
     tls:
       enabled: true
-      secret: 'authelia-cert'
+      secret: "authelia-cert"
 
     traefikCRD:
       enabled: true
@@ -50,7 +50,7 @@ authelia:
       # apiVersionOverride: 'v1alpha1'
 
       entryPoints:
-      - 'websecure'
+        - "websecure"
 
       # priority: 10
 
@@ -69,13 +69,13 @@ authelia:
           # nameOverride: 'authelia-auth'
 
           ## Overrides the endpoint used for the middleware. This is the portion of the endpoint after '/api/authz/'.
-          endpointOverride: ''
+          endpointOverride: ""
 
           authResponseHeaders:
-          - 'Remote-User'
-          - 'Remote-Name'
-          - 'Remote-Email'
-          - 'Remote-Groups'
+            - "Remote-User"
+            - "Remote-Name"
+            - "Remote-Email"
+            - "Remote-Groups"
 
         chains:
           auth:
@@ -94,7 +94,6 @@ authelia:
             #   namespace: 'default'
 
           ingressRoute:
-
             # List of Middlewares to apply before the middleware in the IngressRoute chain.
             before: []
             # before:
@@ -114,7 +113,7 @@ authelia:
         #   existingOptions:
         #     name: 'default-traefik-options'
         #     namespace: 'default'
-        certResolver: ''
+        certResolver: ""
         domainsOverride: []
         # domainsOverride:
         #   - main: 'auth.example.com'
@@ -123,14 +122,14 @@ authelia:
 
         options:
           # nameOverride: 'authelia-tls-options'
-          nameOverride: ''
+          nameOverride: ""
 
-          minVersion: 'VersionTLS12'
-          maxVersion: 'VersionTLS13'
+          minVersion: "VersionTLS12"
+          maxVersion: "VersionTLS13"
           sniStrict: false
           cipherSuites:
-            - 'TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256'
-            - 'TLS_RSA_WITH_AES_256_GCM_SHA384'
+            - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+            - "TLS_RSA_WITH_AES_256_GCM_SHA384"
           curvePreferences: []
           # curvePreferences:
           # - 'CurveP521'
@@ -146,24 +145,23 @@ authelia:
       endpoints:
         authz:
           forward-auth:
-            implementation: 'ForwardAuth'
+            implementation: "ForwardAuth"
 
     log:
-      level: 'info'
-      format: 'text'
-      file_path: ''
+      level: "info"
+      format: "text"
+      file_path: ""
 
-    default_2fa_method: ''
-    theme: 'dark'
+    default_2fa_method: ""
+    theme: "dark"
 
     authentication_backend:
-
       ldap:
         enabled: true
-        implementation: 'custom'
-        address: 'ldap://lldap-ldap.lldap.svc.cluster.local:3890'
-        base_dn: 'DC=matthiasstein,DC=net'
-        additional_users_dn: 'ou=people'
+        implementation: "custom"
+        address: "ldap://lldap-ldap.lldap.svc.cluster.local:3890"
+        base_dn: "DC=matthiasstein,DC=net"
+        additional_users_dn: "ou=people"
         # To allow sign in both with username and email, one can use a filter like
         # (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))
         users_filter: "(&({username_attribute}={input})(objectClass=person))"
@@ -171,7 +169,7 @@ authelia:
         additional_groups_dn: ou=groups
         # The groups are not displayed in the UI, but this filter works.
         groups_filter: "(member={dn})"
-        user: 'uid=svc_authelia,ou=people,dc=matthiasstein,dc=net'
+        user: "uid=svc_authelia,ou=people,dc=matthiasstein,dc=net"
         attributes:
           display_name: displayName
           username: uid
@@ -194,30 +192,30 @@ authelia:
     access_control:
       default_policy: deny
       networks:
-      - name: private
-        networks:
-        - 10.0.0.0/8
-        - 192.168.10.0/24
+        - name: private
+          networks:
+            - 10.0.0.0/8
+            - 192.168.10.0/24
       rules:
-      - domain: homeassistant.matthiasstein.net
-        policy: bypass
-        networks:
-          - private
-      - domain:
-        - "*.matthiasstein.net"
-        - matthiasstein.net
-        policy: two_factor
+        - domain: homeassistant.matthiasstein.net
+          policy: bypass
+          networks:
+            - private
+        - domain:
+            - "*.matthiasstein.net"
+            - matthiasstein.net
+          policy: two_factor
 
     session:
-      name: 'authelia_session'
-      same_site: 'lax'
-      expiration: '1 day'
-      inactivity: '5 minutes'
-      remember_me: '1 month'
+      name: "authelia_session"
+      same_site: "lax"
+      expiration: "1 day"
+      inactivity: "5 minutes"
+      remember_me: "1 month"
       cookies:
-          - domain: 'matthiasstein.net'
-            subdomain: 'auth'
-            default_redirection_url: 'https://matthiasstein.net'
+        - domain: "matthiasstein.net"
+          subdomain: "auth"
+          default_redirection_url: "https://matthiasstein.net"
       redis:
         host: authelia-redis-headless
         enabled: true
@@ -226,8 +224,8 @@ authelia:
 
     regulation:
       max_retries: 3
-      find_time: '2 minutes'
-      ban_time: '5 minutes'
+      find_time: "2 minutes"
+      ban_time: "5 minutes"
 
     storage:
       postgres:
@@ -240,35 +238,35 @@ authelia:
       smtp:
         enabled: true
         enabledSecret: true
-        address: 'smtp://w01edb35.kasserver.com:587'
-        sender: 'Authelia <do-no-reply@matthiasstein.net>'
-        subject: '[Authelia] {title}'
-        username: 'm073cb8d'
+        address: "smtp://w01edb35.kasserver.com:587"
+        sender: "Authelia <do-no-reply@matthiasstein.net>"
+        subject: "[Authelia] {title}"
+        username: "m073cb8d"
 
     identity_providers:
       oidc:
         enabled: false
         lifespans:
-          access_token: '1 hour'
-          authorize_code: '1 minute'
-          id_token: '1 hour'
-          refresh_token: '1 hour and 30 minutes'
+          access_token: "1 hour"
+          authorize_code: "1 minute"
+          id_token: "1 hour"
+          refresh_token: "1 hour and 30 minutes"
 
   secret:
     disabled: false
-    existingSecret: 'authelia'
-    mountPath: '/secrets'
+    existingSecret: "authelia"
+    mountPath: "/secrets"
 
   persistence:
     enabled: false
     readOnly: false
-    subPath: ''
-    existingClaim: ''
-    storageClass: ''
-    volumeName: ''
+    subPath: ""
+    existingClaim: ""
+    storageClass: ""
+    volumeName: ""
     accessModes:
-    - 'ReadWriteOnce'
-    size: '100Mi'
+      - "ReadWriteOnce"
+    size: "100Mi"
     selector: {}
 
   postgresql:
@@ -278,7 +276,7 @@ authelia:
     primary:
       persistence:
         enabled: true
-        storageClass: "longhorn"
+
         size: 1Gi
   redis:
     architecture: standalone
@@ -292,7 +290,7 @@ authelia:
       priorityClassName: ""
       persistence:
         enabled: true
-        storageClass: "longhorn"
+
         accessModes:
           - ReadWriteOnce
         size: 1Gi
@@ -302,7 +300,7 @@ authelia:
       priorityClassName: ""
       persistence:
         enabled: true
-        storageClass: "longhorn"
+
         accessModes:
           - ReadWriteOnce
         size: 1Gi
