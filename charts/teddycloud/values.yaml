@@ -1,0 +1,27 @@
+persistence:
+  volumes:
+    certs:
+      enabled: true
+      mountPath: /teddycloud/certs
+      hostPath: /mnt/data/teddycloud/certs
+      size: 100Mi
+    config:
+      enabled: true
+      mountPath: /teddycloud/config
+      hostPath: /mnt/data/teddycloud/config
+      size: 100Mi
+    content:
+      enabled: true
+      mountPath: /teddycloud/data/content
+      hostPath: /mnt/data/teddycloud/content
+      size: 100Mi
+    library:
+      enabled: true
+      mountPath: /teddycloud/data/library
+      hostPath: /mnt/data/teddycloud/library
+      size: 100Mi
+    firmware:
+      enabled: true
+      mountPath: /teddycloud/data/firmware
+      hostPath: /mnt/data/teddycloud/firmware
+      size: 100Mi

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teddycloud
+  namespace: teddycloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teddycloud
+  template:
+    metadata:
+      labels:
+        app: teddycloud
+    spec:
+      containers:
+        - name: teddycloud
+          image: ghcr.io/toniebox-reverse-engineering/teddycloud:tc_v0.6.4
+          env:
+            - name: TZ
+              value: Europe/Berlin
+          volumeMounts:
+            {{- range $key, $value := .Values.persistence.volumes }}
+            {{- if $value.enabled }}
+            - name: teddycloud-{{ $key }}
+              mountPath: {{ $value.mountPath }}
+            {{- end }}
+            {{- end }}
+      volumes:
+        {{- range $key, $value := .Values.persistence.volumes }}
+        {{- if $value.enabled }}
+        - name: teddycloud-{{ $key }}
+          hostPath:
+            path: {{ $value.hostPath }}
+            type: DirectoryOrCreate
+        {{- end }}
+        {{- end }}
