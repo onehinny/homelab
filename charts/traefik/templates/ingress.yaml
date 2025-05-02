@@ -22,7 +22,7 @@ spec:
       store:
           name: default
 {{- end }}
-{{- if .Values.templates.http_redirect.enable }}
+
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -32,16 +32,10 @@ spec:
   entryPoints:
   - web
   routes:
-  - match: HostRegexp(`{catchall:.*}`)
+  - match: HostRegexp(`{host:.+}`)
     kind: Rule
-    {{- if .Values.templates.http_redirect.priority }}
-    priority: {{ .Values.templates.http_redirect.priority | quote }}
-    {{ else }}
-    priority: 1
-    {{- end }}
     services:
     - name: noop@internal
       kind: TraefikService
     middlewares:
         - name: http-redirect
-{{- end }}
