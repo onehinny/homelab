@@ -2,11 +2,11 @@ argo-cd:
   global:
     image:
       repository: quay.io/argoproj/argocd
-      tag: v2.14.11
+      tag: v3.0.2
   controller:
     image:
       repository: quay.io/argoproj/argocd
-      tag: v2.14.11
+      tag: v3.0.2
   dex:
     image:
       repository: ghcr.io/dexidp/dex
