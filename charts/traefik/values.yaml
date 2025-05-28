@@ -19,7 +19,7 @@ traefik:
   image:
     registry: docker.io
     repository: traefik
-    tag: 3.3.6
+    tag: 3.4.1
   # Removing to allow IP setting
   ports:
     # Configure your entrypoints here...
