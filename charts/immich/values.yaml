@@ -41,7 +41,7 @@ immich:
 
   image:
     repository: ghcr.io/immich-app/immich-server
-    tag: v1.132.3
+    tag: v1.135.1
 
   immich:
     metrics:
