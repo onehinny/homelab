@@ -36,6 +36,7 @@ traefik:
   service:
     spec:
       externalTrafficPolicy: Local
+      loadBalancerIP: 192.168.10.20
   ingressRoute:
     dashboard:
       enabled: true
