@@ -18,7 +18,7 @@ templates:
 
 database:
   port: 5432
-  image: postgres:17.4-alpine
+  image: postgres:17.5-alpine
   mountPath: /var/lib/postgresql/data
   backupImportPath: /tmp/backup
   backupFile: backup.sql
