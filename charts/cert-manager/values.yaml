@@ -1,42 +1,42 @@
 cert-manager:
-    crds:
-        enabled: false
-    global:
-        leaderElection:
-        # Override the namespace used to store the ConfigMap for leader election
-            namespace: "cert-manager"
-    extraArgs:
-        - --cluster-resource-namespace=cert-manager
-        - --enable-certificate-owner-ref=true
-        - --dns01-recursive-nameservers-only
-        - --dns01-recursive-nameservers=192.168.10.53:53
+  crds:
+    enabled: true
+  global:
+    leaderElection:
+      # Override the namespace used to store the ConfigMap for leader election
+      namespace: "cert-manager"
+  extraArgs:
+    - --cluster-resource-namespace=cert-manager
+    - --enable-certificate-owner-ref=true
+    - --dns01-recursive-nameservers-only
+    - --dns01-recursive-nameservers=192.168.10.53:53
+  image:
+    repository: quay.io/jetstack/cert-manager-controller
+    tag: v1.18.2
+  extraEnv:
+    - name: TZ
+      value: Europe/Berlin
+  webhook:
     image:
-        repository: quay.io/jetstack/cert-manager-controller
-        tag: v1.18.2
+      repository: quay.io/jetstack/cert-manager-webhook
+      tag: v1.18.2
     extraEnv:
       - name: TZ
         value: Europe/Berlin
-    webhook:
-        image:
-            repository: quay.io/jetstack/cert-manager-webhook
-            tag: v1.18.2
-        extraEnv:
-          - name: TZ
-            value: Europe/Berlin
-    cainjector:
-        image:
-            repository: quay.io/jetstack/cert-manager-cainjector
-            tag: v1.18.2
-        extraEnv:
-          - name: TZ
-            value: Europe/Berlin
+  cainjector:
+    image:
+      repository: quay.io/jetstack/cert-manager-cainjector
+      tag: v1.18.2
+    extraEnv:
+      - name: TZ
+        value: Europe/Berlin
 templates:
-    letsencrypt:
-        production: true
-        staging: true
-        selfSigned: false
-        email: cloud@matthiasstein.net
-        acme_host: 'dns.example.com'
-    cloudflare:
-        email: clould@matthiasstein.net
-    secrets: ''
+  letsencrypt:
+    production: true
+    staging: true
+    selfSigned: false
+    email: cloud@matthiasstein.net
+    acme_host: "dns.example.com"
+  cloudflare:
+    email: clould@matthiasstein.net
+  secrets: ""
