@@ -12,21 +12,21 @@ cert-manager:
         - --dns01-recursive-nameservers=192.168.10.53:53
     image:
         repository: quay.io/jetstack/cert-manager-controller
-        tag: v1.17.2
+        tag: v1.18.2
     extraEnv:
       - name: TZ
         value: Europe/Berlin
     webhook:
         image:
             repository: quay.io/jetstack/cert-manager-webhook
-            tag: v1.17.2
+            tag: v1.18.2
         extraEnv:
           - name: TZ
             value: Europe/Berlin
     cainjector:
         image:
             repository: quay.io/jetstack/cert-manager-cainjector
-            tag: v1.17.2
+            tag: v1.18.2
         extraEnv:
           - name: TZ
             value: Europe/Berlin
