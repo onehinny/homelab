@@ -44,7 +44,7 @@ openproject:
     image:
       registry: "docker.io"
       repository: "postgres"
-      tag: 17
+      tag: 18
       imagePullPolicy: "Always"
 
     resources:
