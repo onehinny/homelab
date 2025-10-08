@@ -2,7 +2,7 @@ authelia:
   image:
     registry: ghcr.io
     repository: authelia/authelia
-    tag: "4.39.11"
+    tag: "4.39.12"
     pullPolicy: IfNotPresent
     pullSecrets: []
 
