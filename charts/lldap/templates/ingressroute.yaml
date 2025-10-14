@@ -2,11 +2,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.templates.app.name }}
+  name: {{ .Values.templates.app.name }}-https
   namespace: {{ .Values.templates.app.namespace }}
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls: "true"
     cert-manager.io/cluster-issuer: {{ .Values.templates.certificate.issuer }}
 spec:
@@ -18,7 +17,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "lldap.fullname" . }}-http
+                name: {{ .Values.templates.ingress.service }}
                 port:
                   number: {{ .Values.templates.ingress.port }}
   tls:
@@ -27,4 +26,25 @@ spec:
       - {{ . | quote }}
       {{- end }}
       secretName: {{ .Values.templates.app.name }}-cert
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.templates.app.name }}-http
+  namespace: {{ .Values.templates.app.namespace }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
+spec:
+  rules:
+    - host: {{ .Values.templates.ingress.url }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.templates.ingress.service }}
+                port:
+                  number: {{ .Values.templates.ingress.port }}
 {{- end }}
