@@ -1,11 +1,31 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: paperless
+  name: paperless-http
+  namespace: paperless
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
+spec:
+  rules:
+    - host: paperless.matthiasstein.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: paperless
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: paperless-https
   namespace: paperless
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-redirect@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls: "true"
     cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
@@ -22,5 +42,5 @@ spec:
                   number: 8000
   tls:
     - hosts:
-      - paperless.matthiasstein.net
+        - paperless.matthiasstein.net
       secretName: paperless-cert
