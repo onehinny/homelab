@@ -75,7 +75,7 @@ openproject:
     registry: "docker.io"
     repository: "openproject/openproject"
     imagePullPolicy: "Always"
-    tag: "16.6.0-slim"
+    tag: "16.6.1-slim"
 
   memcached:
     ## When set to true, a memcached will be deployed into current namespace, when false you have to provide your own
