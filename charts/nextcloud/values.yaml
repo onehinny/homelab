@@ -160,3 +160,20 @@ nextcloud:
     timeoutSeconds: 5
     failureThreshold: 30
     successThreshold: 1
+
+harp:
+  # Number of replicas for the harp deployment
+  replicaCount: 1
+
+  # Image settings
+  image:
+    repository: ghcr.io/nextcloud/nextcloud-appapi-harp
+    tag: v0.3.1
+    pullPolicy: IfNotPresent
+  # Nextcloud instance URL reachable from the harp container
+  ncInstanceUrl: https://nextcloud.matthiasstein.net
+
+  # Certificate handling for the container; set useHostPath to true to mount a hostPath
+  certs:
+    useHostPath: false
+    hostPath: ""

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-harp
+  labels:
+    app: {{ .Release.Name }}-harp
+spec:
+  replicas: {{ .Values.harp.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-harp
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-harp
+    spec:
+      containers:
+        - name: harp
+          image: "{{ .Values.harp.image.repository }}"
+          env:
+            - name: HP_SHARED_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud
+                  key: harp-shared-key
+            - name: NC_INSTANCE_URL
+              value: "{{ .Values.harp.ncInstanceUrl }}"
+          ports:
+            - containerPort: 8780
+            - containerPort: 8782
+          volumeMounts:
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+            - name: certs
+              mountPath: /certs
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+        - name: certs
+          emptyDir: {}
