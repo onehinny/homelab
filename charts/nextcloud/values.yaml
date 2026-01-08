@@ -177,3 +177,10 @@ harp:
   certs:
     useHostPath: false
     hostPath: ""
+
+  service:
+    # Service type for the harp service (ClusterIP, NodePort, LoadBalancer)
+    type: ClusterIP
+    # Ports exposed by the service
+    port: 8780
+    adminPort: 8782

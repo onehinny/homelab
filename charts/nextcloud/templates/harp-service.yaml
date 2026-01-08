@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-harp
+  labels:
+    app: {{ .Release.Name }}-harp
+spec:
+  type: {{ .Values.harp.service.type | default "ClusterIP" }}
+  selector:
+    app: {{ .Release.Name }}-harp
+  ports:
+    - name: http
+      port: {{ .Values.harp.service.port | default 8780 }}
+      targetPort: 8780
+      protocol: TCP
+    - name: admin
+      port: {{ .Values.harp.service.adminPort | default 8782 }}
+      targetPort: 8782
+      protocol: TCP
