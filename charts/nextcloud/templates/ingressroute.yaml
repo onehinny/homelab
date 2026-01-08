@@ -53,20 +53,25 @@ spec:
 {{- if .Values.templates.ingress.url }}
 ---
 # Traefik IngressRoute for external apps (exapps)
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: {{ .Release.Name }}-exapps
   namespace: {{ .Values.templates.app.namespace }}
   labels:
     app: {{ .Release.Name }}-harp
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
-  entryPoints:
-    - web
-  routes:
-    - match: PathPrefix(`/exapps/`)
-      kind: Rule
-      services:
-        - name: {{ .Release.Name }}-harp
-          port: {{ .Values.harp.service.port | default 8780 }}
+  rules:
+    - host: {{ .Values.templates.ingress.url }}
+      http:
+        paths:
+          - path: /exapps/
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-harp
+                port:
+                  number: {{ .Values.harp.service.port }}
 {{- end }}
