@@ -49,3 +49,24 @@ spec:
                 port:
                   number: {{ .Values.templates.ingress.port }}
 {{- end }}
+
+{{- if .Values.templates.ingress.url }}
+---
+# Traefik IngressRoute for external apps (exapps)
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Release.Name }}-exapps
+  namespace: {{ .Values.templates.app.namespace }}
+  labels:
+    app: {{ .Release.Name }}-harp
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: PathPrefix(`/exapps/`)
+      kind: Rule
+      services:
+        - name: {{ .Release.Name }}-harp
+          port: {{ .Values.harp.service.port | default 8780 }}
+{{- end }}
