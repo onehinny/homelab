@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: teddycloud
-          image: ghcr.io/toniebox-reverse-engineering/teddycloud:tc_v0.6.4
+          image: ghcr.io/toniebox-reverse-engineering/teddycloud:tc_v0.6.7
           env:
             - name: TZ
               value: Europe/Berlin
