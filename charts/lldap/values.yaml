@@ -24,7 +24,7 @@ image:
   pullPolicy: IfNotPresent
   # -- image tag
   # @default -- chart.appVersion
-  tag: v0.6.2
+  tag: v0.6.3
 
 imagePullSecrets: []
 nameOverride: ""
